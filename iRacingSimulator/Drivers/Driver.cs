@@ -11,12 +11,10 @@ namespace iRacingSimulator.Drivers
         public Driver()
         {
             this.Car = new DriverCarInfo();
-            this.OfftrackInfo = new DriverOfftrackInfo(this);
             this.PitInfo = new DriverPitInfo(this);
             this.Results = new DriverResults(this);
             this.QualyResults = new DriverQualyResults(this);
             this.Live = new DriverLiveInfo(this);
-            this.Championship = new DriverChampInfo(this);
         }
 
         public int Id { get; set; }
@@ -40,12 +38,10 @@ namespace iRacingSimulator.Drivers
         public string DivisionName { get; set; }
 
         public DriverCarInfo Car { get; set; }
-        public DriverOfftrackInfo OfftrackInfo { get; set; }
         public DriverPitInfo PitInfo { get; set; }
         public DriverResults Results { get; private set; }
         public DriverSessionResults CurrentResults { get; set; }
         public DriverQualyResults QualyResults { get; set; }
-        public DriverChampInfo Championship { get; set; }
         public DriverLiveInfo Live { get; private set; }
 
         public string LongDisplay

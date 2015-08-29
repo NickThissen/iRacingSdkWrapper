@@ -41,7 +41,6 @@ namespace iRacingSimulator.Drivers
             this.LapDistance = e.CarIdxLapDistPct.Value[this.Driver.Id];
             this.TrackSurface = e.CarIdxTrackSurface.Value[this.Driver.Id];
 
-            this.Driver.OfftrackInfo.CalculateOfftrackPercentage();
             this.Driver.PitInfo.CalculatePitInfo();
         }
 
