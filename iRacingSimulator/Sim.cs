@@ -356,7 +356,7 @@ namespace iRacingSimulator
             // Update drivers
             this.UpdateDriverList(e.SessionInfo);
 
-            this.OnSessionInfoUpdated();
+            this.OnSessionInfoUpdated(e);
         }
 
         private void SdkOnTelemetryUpdated(object sender, SdkWrapper.TelemetryUpdatedEventArgs e)
@@ -386,7 +386,7 @@ namespace iRacingSimulator
             // Update session data
             this.SessionData.Update(e.TelemetryInfo);
 
-            this.OnTelemetryUpdated();
+            this.OnTelemetryUpdated(e);
         }
 
         private void SdkOnDisconnected(object sender, EventArgs e)
@@ -402,8 +402,8 @@ namespace iRacingSimulator
         public event EventHandler Connected;
         public event EventHandler Disconnected;
         public event EventHandler StaticInfoChanged;
-        public event EventHandler SessionInfoUpdated;
-        public event EventHandler TelemetryUpdated;
+        public event EventHandler<SdkWrapper.SessionInfoUpdatedEventArgs> SessionInfoUpdated;
+        public event EventHandler<SdkWrapper.TelemetryUpdatedEventArgs> TelemetryUpdated;
         public event EventHandler SimulationUpdated;
 
         public event EventHandler<DriverSwapEventArgs> DriverSwapEvent;
@@ -426,14 +426,14 @@ namespace iRacingSimulator
             if (this.StaticInfoChanged != null) this.StaticInfoChanged(this, EventArgs.Empty);
         }
 
-        protected virtual void OnSessionInfoUpdated()
+        protected virtual void OnSessionInfoUpdated(SdkWrapper.SessionInfoUpdatedEventArgs e)
         {
-            if (this.SessionInfoUpdated != null) this.SessionInfoUpdated(this, EventArgs.Empty);
+            if (this.SessionInfoUpdated != null) this.SessionInfoUpdated(this, e);
         }
 
-        protected virtual void OnTelemetryUpdated()
+        protected virtual void OnTelemetryUpdated(SdkWrapper.TelemetryUpdatedEventArgs e)
         {
-            if (this.TelemetryUpdated != null) this.TelemetryUpdated(this, EventArgs.Empty);
+            if (this.TelemetryUpdated != null) this.TelemetryUpdated(this, e);
         }
 
         protected virtual void OnSimulationUpdated()
