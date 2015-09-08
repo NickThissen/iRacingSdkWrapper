@@ -34,12 +34,10 @@ namespace iRacingSimulator.Examples.WPFDriverGrid
             this.SetupGrid();
 
             // Initialize the sim communication
-            Sim.Instance.Start();
-
-            // Listen to update events
             Sim.Instance.SessionInfoUpdated += OnSessionInfoUpdated;
             Sim.Instance.TelemetryUpdated += OnTelemetryUpdated;
             Sim.Instance.DriverSwapEvent += OnDriverSwapEvent;
+            Sim.Instance.Start();
         }
 
         private void SetupGrid()

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.WPFDriverGrid", "Samples\iRacingSimulator.Examples.WPFDriverGrid\iRacingSimulator.Examples.WPFDriverGrid.csproj", "{B36991C5-2B13-4487-B42B-FA1EE0A7721F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.WPF-MVVM-DriverGrid", "Samples\iRacingSimulator.Examples.WPF-MVVM-DriverGrid\iRacingSimulator.Examples.WPF-MVVM-DriverGrid.csproj", "{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B36991C5-2B13-4487-B42B-FA1EE0A7721F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B36991C5-2B13-4487-B42B-FA1EE0A7721F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B36991C5-2B13-4487-B42B-FA1EE0A7721F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

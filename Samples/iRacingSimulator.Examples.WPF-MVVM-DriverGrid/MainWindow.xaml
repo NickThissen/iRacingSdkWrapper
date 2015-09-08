@@ -1,0 +1,22 @@
+﻿<Window x:Class="iRacingSimulator.Examples.WPF_MVVM_DriverGrid.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:iRacingSimulator.Examples.WPF_MVVM_DriverGrid"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <DataGrid x:Name="grid" AutoGenerateColumns="False" ItemsSource="{Binding DriversView}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Custid}" Header="Customer ID" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding CarNumber}" Header="Car #" />
+                <DataGridTextColumn Binding="{Binding IRating}" Header="iRating" />
+                <DataGridTextColumn Binding="{Binding Live.Position}" Header="Position" />
+                <DataGridTextColumn Binding="{Binding CurrentResults.LastTime.Display}" Header="Last laptime" />
+                <DataGridTextColumn Binding="{Binding PitInfo.LastPitLaneTimeSeconds}" Header="Last pitstop" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
