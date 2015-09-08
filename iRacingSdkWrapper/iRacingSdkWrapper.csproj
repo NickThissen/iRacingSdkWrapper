@@ -51,6 +51,9 @@
     <Compile Include="Bitfields\BitfieldBase.cs" />
     <Compile Include="Bitfields\CameraState.cs" />
     <Compile Include="Bitfields\EngineWarning.cs" />
+    <Compile Include="Bitfields\PitServiceFlag.cs" />
+    <Compile Include="Broadcast\BroadcastBase.cs" />
+    <Compile Include="Broadcast\ReplayControl.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Bitfields\SessionFlag.cs" />
     <Compile Include="SessionInfo.cs" />

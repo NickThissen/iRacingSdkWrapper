@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
 using iRSDKSharp;
+using iRacingSdkWrapper.Broadcast;
 
 namespace iRacingSdkWrapper
 {
@@ -79,11 +80,15 @@ namespace iRacingSdkWrapper
                     throw new ArgumentOutOfRangeException("TelemetryUpdateFrequency cannot be more than 60.");
 
                 _TelemetryUpdateFrequency = value;
-
+                
                 waitTime = (int) Math.Floor(1000f/value) - 1;
             }
         }
 
+        /// <summary>
+        /// The time in milliseconds between each check if iRacing is running. Use a low value (hundreds of milliseconds) to respond quickly to iRacing startup.
+        /// Use a high value (several seconds) to conserve resources if an immediate response to startup is not required.
+        /// </summary>
         public int ConnectSleepTime
         {
             get; set;
@@ -95,21 +100,13 @@ namespace iRacingSdkWrapper
         /// </summary>
         public int DriverId { get { return _DriverId; } }
 
+        #region Broadcast messages
+        
+        #endregion
+
         #endregion
 
         #region Methods
-
-        public object GetData(string headerName)
-        {
-            if (!this.IsConnected) return null;
-
-            return sdk.GetData(headerName);
-        }
-
-        public TelemetryValue<T> GetTelemetryValue<T>(string name)
-        {
-            return new TelemetryValue<T>(sdk, name);
-        }
 
         /// <summary>
         /// Connects to iRacing and starts the main loop in a background thread.
@@ -129,7 +126,31 @@ namespace iRacingSdkWrapper
         {
             _IsRunning = false;
         }
-        
+
+        /// <summary>
+        /// Return raw data object from the live telemetry.
+        /// </summary>
+        /// <param name="headerName">The name of the telemetry property to obtain.</param>
+        public object GetData(string headerName)
+        {
+            if (!this.IsConnected) return null;
+
+            return sdk.GetData(headerName);
+        }
+
+        /// <summary>
+        /// Return live telemetry data wrapped in a TelemetryValue object of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of the desired object.</typeparam>
+        /// <param name="name">The name of the desired object.</param>
+        public TelemetryValue<T> GetTelemetryValue<T>(string name)
+        {
+            return new TelemetryValue<T>(sdk, name);
+        }
+
+        /// <summary>
+        /// Reads new session info and raises the SessionInfoUpdated event, regardless of if the session info has changed.
+        /// </summary>
         public void RequestSessionInfoUpdate()
         {
             var sessionInfo = sdk.GetSessionInfo();
@@ -137,7 +158,7 @@ namespace iRacingSdkWrapper
             var sessionArgs = new SessionInfoUpdatedEventArgs(sessionInfo, time);
             this.RaiseEvent(OnSessionInfoUpdated, sessionArgs);
         }
-
+        
         private object TryGetSessionNum()
         {
             try
@@ -325,9 +346,19 @@ namespace iRacingSdkWrapper
 
         #region Enums
 
+        /// <summary>
+        /// The way in which events of the SDK wrapper are raised.
+        /// </summary>
         public enum EventRaiseTypes
         {
+            /// <summary>
+            /// Events are raised on the current thread (the thread on which the SdkWrapper object was created).
+            /// </summary>
             CurrentThread,
+
+            /// <summary>
+            /// Events are raised on a separate background thread (synchronization / invokation required to update UI).
+            /// </summary>
             BackgroundThread
         }
 
