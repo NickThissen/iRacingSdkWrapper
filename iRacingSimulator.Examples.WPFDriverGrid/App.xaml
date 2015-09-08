@@ -1,0 +1,9 @@
+﻿<Application x:Class="iRacingSimulator.Examples.WPFDriverGrid.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:iRacingSimulator.Examples.WPFDriverGrid"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
