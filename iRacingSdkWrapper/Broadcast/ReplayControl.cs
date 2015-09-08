@@ -7,7 +7,7 @@ using iRSDKSharp;
 namespace iRacingSdkWrapper.Broadcast
 {
     /// <summary>
-    /// Controls the replay system.
+    /// Controls the replay playback system.
     /// </summary>
     public class ReplayControl : BroadcastBase
     {
@@ -61,6 +61,40 @@ namespace iRacingSdkWrapper.Broadcast
         {
             Broadcast(BroadcastMessageTypes.ReplaySearch,
                 (int)replayEvent, 0);
+        }
+
+        /// <summary>
+        /// Pause the replay.
+        /// </summary>
+        public void Pause()
+        {
+            SetPlaybackSpeed(0, false);
+        }
+
+        /// <summary>
+        /// Set the playback speed of the replay.
+        /// </summary>
+        /// <param name="speed">The playback speed between -16 (reverse) and 16, with 1 realtime speed and 0 being paused.</param>
+        public void SetPlaybackSpeed(int speed)
+        {
+            SetPlaybackSpeed(speed, false);
+        }
+
+        /// <summary>
+        /// Set the playback to slow motion and set the speed of the replay.
+        /// </summary>
+        /// <param name="slowmoSpeed">The playback speed between -16 (reverse) and 16, with 1 realtime speed and 0 being paused.</param>
+        public void SetSlowmotionPlaybackSpeed(int slowmoSpeed)
+        {
+            SetPlaybackSpeed(slowmoSpeed, true);
+        }
+
+        public void SetPlaybackSpeed(int speed, bool slowmo)
+        {
+            if (speed > 16) speed = 16;
+            if (speed < -16) speed = -16;
+            Broadcast(BroadcastMessageTypes.ReplaySetPlaySpeed,
+                speed, slowmo ? 1 : 0, 0);
         }
     }
 }

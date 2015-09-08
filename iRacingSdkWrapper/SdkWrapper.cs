@@ -38,6 +38,10 @@ namespace iRacingSdkWrapper
             this.TelemetryUpdateFrequency = 60;
             this.ConnectSleepTime = 1000;
             _DriverId = -1;
+
+            this.Replay = new ReplayControl(this);
+            this.Camera = new CameraControl(this);
+            this.PitCommands = new PitCommandControl(this);
         }
 
         #region Properties
@@ -102,6 +106,10 @@ namespace iRacingSdkWrapper
 
         #region Broadcast messages
         
+        public ReplayControl Replay { get; private set; }
+        public CameraControl Camera { get; private set; }
+        public PitCommandControl PitCommands { get; private set; }
+
         #endregion
 
         #endregion

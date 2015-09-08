@@ -8,13 +8,28 @@ namespace iRacingSdkWrapper.Bitfields
     public abstract class BitfieldBase<T>
        where T : struct, IConvertible, IComparable
     {
+        protected BitfieldBase() : this(0)
+        { } 
+
         protected BitfieldBase(int value)
         {
-            _Value = (uint)value;
+            _value = (uint)value;
         }
 
-        private readonly uint _Value;
-        public uint Value { get { return _Value; } }
+        private uint _value;
+        public uint Value { get { return _value; } }
+
+        public void Add(T bit)
+        {
+            if (!Contains(bit))
+                _value = _value | (uint)Convert.ChangeType(bit, bit.GetTypeCode());
+        }
+
+        public void Remove(T bit)
+        {
+            if (Contains(bit))
+                _value = _value & ~(uint)Convert.ChangeType(bit, bit.GetTypeCode());
+        }
 
         public bool Contains(T bit)
         {

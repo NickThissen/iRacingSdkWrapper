@@ -16,7 +16,20 @@ namespace iRSDKSharp
     public enum ReplayStateModeTypes { Erasetape = 0 };
     public enum ReloadTexturesModeTypes { All = 0, CarIdx };
     public enum ChatCommandModeTypes { Macro = 0, BeginChat, Reply, Cancel };
-    public enum PitCommandModeTypes { Clear = 0, WS, Fuel, LF, RF, LR, RR, ClearTires };
+
+    public enum PitCommandModeTypes
+    {
+        Clear = 0,
+        WS = 1,
+        Fuel = 2,
+        LF = 3,
+        RF = 4,
+        LR = 5,
+        RR = 6,
+        ClearTires = 7,
+        FastRepair = 8
+    };
+
     public enum TelemCommandModeTypes { Stop = 0, Start, Restart };
 
     public class Defines

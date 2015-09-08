@@ -7,6 +7,8 @@ namespace iRacingSdkWrapper.Bitfields
 {
     class PitServiceFlag : BitfieldBase<PitServiceFlags>
     {
+        public PitServiceFlag() : this(0) { }
+
         public PitServiceFlag(int value) : base(value)
         { }
     }

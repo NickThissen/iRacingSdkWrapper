@@ -5,6 +5,8 @@ namespace iRacingSdkWrapper.Bitfields
 {
     public class CameraState : BitfieldBase<CameraStates>
     {
+        public CameraState() : this(0) { }
+
         public CameraState(int value) : base(value)
         {
         }
