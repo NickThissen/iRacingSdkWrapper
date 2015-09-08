@@ -87,6 +87,9 @@ namespace iRacingSimulator.Examples.WinformsDriverGrid
             // Update the list of drivers: simply clear the old list and re-fill it with the drivers from iRacingSimulator
             _drivers.Clear();
             _drivers.AddRange(Sim.Instance.Drivers);
+
+            // Update the grid
+            this.RefreshGrid();
         }
 
         private void OnTelemetryUpdated(object sender, iRacingSdkWrapper.SdkWrapper.TelemetryUpdatedEventArgs e)
