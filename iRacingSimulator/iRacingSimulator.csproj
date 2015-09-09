@@ -44,6 +44,7 @@
     <Compile Include="Drivers\DriverCarInfo.cs" />
     <Compile Include="Drivers\DriverLiveInfo.cs" />
     <Compile Include="Drivers\DriverPitInfo.cs" />
+    <Compile Include="Drivers\DriverPrivateInfo.cs" />
     <Compile Include="Drivers\DriverQualyResults.cs" />
     <Compile Include="Drivers\DriverResults.cs" />
     <Compile Include="Drivers\License.cs" />
