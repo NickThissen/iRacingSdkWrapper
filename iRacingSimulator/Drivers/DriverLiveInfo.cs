@@ -20,18 +20,22 @@ namespace iRacingSimulator.Drivers
 
         public int Position { get; set; }
         public int ClassPosition { get; set; }
-        public int Lap { get; set; }
-        public float LapDistance { get; set; }
+        public int Lap { get; private set; }
+        public float LapDistance { get; private set; }
 
         public float TotalLapDistance
         {
             get { return Lap + LapDistance; }
         }
 
-        public TrackSurfaces TrackSurface { get; set; }
+        public TrackSurfaces TrackSurface { get; private set; }
 
-        public double Speed { get; set; }
+        public int Gear { get; private set; }
+        public float Rpm { get; private set; }
+        public double SteeringAngle { get; private set; }
 
+        public double Speed { get; private set; }
+        
         public string DeltaToLeader { get; set; }
         public string DeltaToNext { get; set; }
         
@@ -40,6 +44,10 @@ namespace iRacingSimulator.Drivers
             this.Lap = e.CarIdxLap.Value[this.Driver.Id];
             this.LapDistance = e.CarIdxLapDistPct.Value[this.Driver.Id];
             this.TrackSurface = e.CarIdxTrackSurface.Value[this.Driver.Id];
+
+            this.Gear = e.CarIdxGear.Value[this.Driver.Id];
+            this.Rpm = e.CarIdxRPM.Value[this.Driver.Id];
+            this.SteeringAngle = e.CarIdxSteer.Value[this.Driver.Id];
 
             this.Driver.PitInfo.CalculatePitInfo();
         }
