@@ -91,8 +91,9 @@ namespace iRacingSdkWrapper.Broadcast
 
         public void SetPlaybackSpeed(int speed, bool slowmo)
         {
-            if (speed > 16) speed = 16;
-            if (speed < -16) speed = -16;
+            if (speed < -16 || speed > 16)
+                throw new ArgumentOutOfRangeException("speed", "Replay speed must be between -16 and 16.");
+            
             Broadcast(BroadcastMessageTypes.ReplaySetPlaySpeed,
                 speed, slowmo ? 1 : 0, 0);
         }

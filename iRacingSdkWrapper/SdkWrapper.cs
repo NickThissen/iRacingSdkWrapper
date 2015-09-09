@@ -42,6 +42,9 @@ namespace iRacingSdkWrapper
             this.Replay = new ReplayControl(this);
             this.Camera = new CameraControl(this);
             this.PitCommands = new PitCommandControl(this);
+            this.Chat = new ChatControl(this);
+            this.Textures = new TextureControl(this);
+            this.TelemetryRecording = new TelemetryRecordingControl(this);
         }
 
         #region Properties
@@ -105,10 +108,36 @@ namespace iRacingSdkWrapper
         public int DriverId { get { return _DriverId; } }
 
         #region Broadcast messages
-        
+
+        /// <summary>
+        /// Controls the replay playback system.
+        /// </summary>
         public ReplayControl Replay { get; private set; }
+
+        /// <summary>
+        /// Provides control over the replay camera and where it is focused.
+        /// </summary>
         public CameraControl Camera { get; private set; }
+
+        /// <summary>
+        /// Provides control over the pit commands.
+        /// </summary>
         public PitCommandControl PitCommands { get; private set; }
+
+        /// <summary>
+        /// Provides control over the chat window.
+        /// </summary>
+        public ChatControl Chat { get; private set; }
+
+        /// <summary>
+        /// Provides control over reloading of car textures.
+        /// </summary>
+        public TextureControl Textures { get; private set; }
+
+        /// <summary>
+        /// Provides control over the telemetry recording system.
+        /// </summary>
+        public TelemetryRecordingControl TelemetryRecording { get; private set; }
 
         #endregion
 

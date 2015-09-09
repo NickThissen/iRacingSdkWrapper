@@ -54,8 +54,11 @@
     <Compile Include="Bitfields\PitServiceFlag.cs" />
     <Compile Include="Broadcast\BroadcastBase.cs" />
     <Compile Include="Broadcast\CameraControl.cs" />
+    <Compile Include="Broadcast\ChatControl.cs" />
     <Compile Include="Broadcast\PitCommandControl.cs" />
     <Compile Include="Broadcast\ReplayControl.cs" />
+    <Compile Include="Broadcast\TelemetryRecordingControl.cs" />
+    <Compile Include="Broadcast\TextureControl.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Bitfields\SessionFlag.cs" />
     <Compile Include="SessionInfo.cs" />

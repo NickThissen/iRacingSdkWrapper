@@ -17,6 +17,30 @@ namespace iRacingSdkWrapper.Broadcast
         }
 
         /// <summary>
+        /// Switch to the 'focus on crashes' dynamic camera.
+        /// </summary>
+        public void FocusOnCrashes()
+        {
+            SwitchToPosition(-3);
+        }
+
+        /// <summary>
+        /// Switch to the 'focus on leader' dynamic camera.
+        /// </summary>
+        public void FocusOnLeader()
+        {
+            SwitchToPosition(-2);
+        }
+
+        /// <summary>
+        /// Switch to the 'focus on most exciting' dynamic camera.
+        /// </summary>
+        public void FocusMostExciting()
+        {
+            SwitchToPosition(-1);
+        }
+
+        /// <summary>
         /// Switch the camera to the specified position and set the camera group.
         /// </summary>
         /// <param name="position">The position of the car to switch to.</param>
