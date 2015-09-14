@@ -103,10 +103,11 @@ namespace iRacingSimulator
                 if (driver == null)
                 {
                     driver = Driver.FromSessionInfo(info, id);
-                    driver.IsCurrentDriver = false;
 
                     // If no driver found, end of list reached
                     if (driver == null) break;
+
+                    driver.IsCurrentDriver = false;
 
                     // Add to list
                     _drivers.Add(driver);
