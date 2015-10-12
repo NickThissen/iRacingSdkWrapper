@@ -47,6 +47,7 @@
     <Compile Include="Drivers\DriverQualyResults.cs" />
     <Compile Include="Drivers\DriverResults.cs" />
     <Compile Include="Drivers\License.cs" />
+    <Compile Include="Events\RaceEvent.cs" />
     <Compile Include="Laptime.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="SessionData.cs" />

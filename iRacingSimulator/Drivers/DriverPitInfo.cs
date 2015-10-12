@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using iRacingSdkWrapper;
+using iRacingSimulator.Events;
 
 namespace iRacingSimulator.Drivers
 {
@@ -21,6 +22,7 @@ namespace iRacingSimulator.Drivers
 
         public DateTime? PitLaneEntryTime { get; set; }
         public DateTime? PitStallEntryTime { get; set; }
+        public DateTime? PitStallExitTime { get; set; }
 
         public double LastPitLaneTimeSeconds { get; set; }
         public double LastPitStallTimeSeconds { get; set; }
@@ -51,10 +53,8 @@ namespace iRacingSimulator.Drivers
                     // We have now entered pitlane
                     this.PitLaneEntryTime = DateTime.UtcNow;
                     this.CurrentPitLaneTimeSeconds = 0;
-
-                    var e = new Sim.PitstopEventArgs(Sim.PitstopEventArgs.PitstopUpdateTypes.EnterPitLane, _driver,
-    Sim.Instance.Telemetry.SessionTime.Value);
-                    Sim.Instance.NotifyPitstop(e);
+                    
+                    Sim.Instance.NotifyPitstop(RaceEvent.EventTypes.PitEntry, _driver);
                 }
             }
             else
@@ -72,10 +72,6 @@ namespace iRacingSimulator.Drivers
                         // We have just entered our pit stall
                         this.PitStallEntryTime = DateTime.UtcNow;
                         this.CurrentPitStallTimeSeconds = 0;
-
-                        var e = new Sim.PitstopEventArgs(Sim.PitstopEventArgs.PitstopUpdateTypes.EnterPitStall, _driver,
-    Sim.Instance.Telemetry.SessionTime.Value);
-                        Sim.Instance.NotifyPitstop(e);
                     }
                 }
                 else
@@ -92,16 +88,24 @@ namespace iRacingSimulator.Drivers
 
                         this.CurrentPitStallTimeSeconds = 0;
 
-                        var e = new Sim.PitstopEventArgs(Sim.PitstopEventArgs.PitstopUpdateTypes.ExitPitStall, _driver,
-                            Sim.Instance.Telemetry.SessionTime.Value);
-                        Sim.Instance.NotifyPitstop(e);
-
+                        if (this.PitStallExitTime != null)
+                        {
+                            var diff = this.PitStallExitTime.Value - DateTime.UtcNow;
+                            if (Math.Abs(diff.TotalSeconds) < 5)
+                            {
+                                // Sim detected pit stall exit again less than 5 seconds after previous exit.
+                                // This is not possible
+                                return;
+                            }
+                        }
+                        
                         this.Pitstops += 1;
                         this.LastPitLap = _driver.Results.Current.LapsComplete;
                         this.CurrentStint = 0;
 
                         // Reset
                         this.PitStallEntryTime = null;
+                        this.PitStallExitTime = DateTime.UtcNow;
                     }
                 }
                 
@@ -113,9 +117,7 @@ namespace iRacingSimulator.Drivers
                         (DateTime.UtcNow - this.PitLaneEntryTime.Value).TotalSeconds;
                     this.CurrentPitLaneTimeSeconds = 0;
 
-                    var e = new Sim.PitstopEventArgs(Sim.PitstopEventArgs.PitstopUpdateTypes.ExitPitLane, _driver,
-                        Sim.Instance.Telemetry.SessionTime.Value);
-                    Sim.Instance.NotifyPitstop(e);
+                    Sim.Instance.NotifyPitstop(RaceEvent.EventTypes.PitExit, _driver);
 
                     // Reset
                     this.PitLaneEntryTime = null;

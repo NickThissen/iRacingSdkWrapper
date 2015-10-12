@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iRacingSdkWrapper;
+using iRacingSdkWrapper.Bitfields;
 using iRacingSimulator.Drivers;
+using iRacingSimulator.Events;
 
 namespace iRacingSimulator
 {
@@ -73,6 +75,8 @@ namespace iRacingSimulator
         private readonly List<Driver> _drivers;
         public List<Driver> Drivers { get { return _drivers; } }
 
+        public Driver Leader { get; set; }
+
         private bool _isUpdatingDrivers;
 
         private void UpdateDriverList(SessionInfo info)
@@ -116,8 +120,16 @@ namespace iRacingSimulator
 
                     if (oldId != driver.CustId)
                     {
-                        var e = new DriverSwapEventArgs(oldId, driver.Id, oldName, driver.Name, driver, _telemetry.SessionTime.Value);
-                        this.OnDriverSwap(e);
+                        var e = new DriverSwapRaceEvent();
+                        e.Driver = driver;
+                        e.PreviousDriverId = oldId;
+                        e.PreviousDriverName = oldName;
+                        e.CurrentDriverId = driver.Id;
+                        e.CurrentDriverName = driver.Name;
+                        e.SessionTime = _telemetry.SessionTime.Value;
+                        e.Lap = driver.Live.Lap;
+
+                        this.OnRaceEvent(e);
                     }
                 }
             }
@@ -192,16 +204,25 @@ namespace iRacingSimulator
                         // Check for new leader
                         if (previousPosition > 1 && driver.Results.Current.ClassPosition == 1)
                         {
-                            var e = new LeaderChangeEventArgs(driver, _telemetry.SessionTime.Value);
-                            this.OnLeaderChange(e);
+                            var e = new NewLeaderRaceEvent();
+                            e.Driver = driver;
+                            e.SessionTime = _telemetry.SessionTime.Value;
+                            e.Lap = driver.Live.Lap;
+
+                            this.OnRaceEvent(e);
                         }
 
                         // Check for new best lap
                         var bestlap = _sessionData.UpdateFastestLap(driver.CurrentResults.FastestTime, driver);
                         if (bestlap != null)
                         {
-                            var e = new FastLapEventArgs(driver, bestlap, _telemetry.SessionTime.Value);
-                            this.OnFastLap(e);
+                            var e = new BestLapRaceEvent();
+                            e.Driver = driver;
+                            e.BestLap = bestlap;
+                            e.SessionTime = _telemetry.SessionTime.Value;
+                            e.Lap = driver.Live.Lap;
+
+                            this.OnRaceEvent(e);
                         }
                     }
                 }
@@ -231,8 +252,6 @@ namespace iRacingSimulator
 
         private void CalculateLivePositions()
         {
-            Driver leader = null;
-
             if (this.SessionData.EventType == "Race")
             {
                 // Determine live position from lapdistance
@@ -240,7 +259,7 @@ namespace iRacingSimulator
                 int pos = 1;
                 foreach (var driver in _drivers.OrderByDescending(d => d.Live.TotalLapDistance))
                 {
-                    if (pos == 1) leader = driver;
+                    if (pos == 1) this.Leader = driver;
                     driver.Live.Position = pos;
                     pos++;
                 }
@@ -267,14 +286,14 @@ namespace iRacingSimulator
                 // In P or Q, set live position from result position (== best lap according to iRacing)
                 foreach (var driver in _drivers.OrderBy(d => d.Results.Current.Position))
                 {
-                    if (leader == null) leader = driver;
+                    if (this.Leader == null) this.Leader = driver;
                     driver.Live.Position = driver.Results.Current.Position;
                     driver.Live.ClassPosition = driver.Results.Current.ClassPosition;
                 }
             }
 
-            if (leader != null && leader.CurrentResults != null)
-                _sessionData.LeaderLap = leader.CurrentResults.LapsComplete + 1;
+            if (this.Leader != null && this.Leader.CurrentResults != null)
+                _sessionData.LeaderLap = this.Leader.CurrentResults.LapsComplete + 1;
         }
 
         private void UpdateTimeDelta()
@@ -289,9 +308,9 @@ namespace iRacingSimulator
             if (drivers.Count > 0)
             {
                 // Get leader
-                var leader = drivers[0];
-                leader.Live.DeltaToLeader = "-";
-                leader.Live.DeltaToNext = "-";
+                //var leader = drivers[0];
+                this.Leader.Live.DeltaToLeader = "-";
+                this.Leader.Live.DeltaToNext = "-";
 
                 // Loop through drivers
                 for (int i = 1; i < drivers.Count; i++)
@@ -300,12 +319,12 @@ namespace iRacingSimulator
                     var ahead = drivers[i - 1];
 
                     // Lapped?
-                    var leaderLapDiff = Math.Abs(leader.Live.TotalLapDistance - behind.Live.TotalLapDistance);
+                    var leaderLapDiff = Math.Abs(this.Leader.Live.TotalLapDistance - behind.Live.TotalLapDistance);
                     var nextLapDiff = Math.Abs(ahead.Live.TotalLapDistance - behind.Live.TotalLapDistance);
 
                     if (leaderLapDiff < 1)
                     {
-                        var leaderDelta = _timeDelta.GetDelta(behind.Id, leader.Id);
+                        var leaderDelta = _timeDelta.GetDelta(behind.Id, this.Leader.Id);
                         behind.Live.DeltaToLeader = TimeDelta.DeltaToString(leaderDelta);
                     }
                     else
@@ -326,9 +345,43 @@ namespace iRacingSimulator
             }
         }
 
-        public void NotifyPitstop(PitstopEventArgs e)
+        private void CheckSessionFlagUpdates(SessionFlag prevFlags, SessionFlag curFlags)
         {
-            this.OnPitstop(e);
+            var go = SessionFlags.StartGo;
+            var green = SessionFlags.Green;
+            var yellow = SessionFlags.Caution;
+
+            bool isGreen = !prevFlags.Contains(go) && curFlags.Contains(go) 
+                || !prevFlags.Contains(green) && curFlags.Contains(green);
+
+            if (isGreen)
+            {
+                var e=  new GreenFlagRaceEvent();
+                e.SessionTime = _telemetry.SessionTime.Value;
+                e.Lap = Leader == null ? 0 : Leader.Live.Lap;
+                this.OnRaceEvent(e);
+            }
+
+            if (!prevFlags.Contains(yellow) && curFlags.Contains(yellow))
+            {
+                var e = new YellowFlagRaceEvent();
+                e.SessionTime = _telemetry.SessionTime.Value;
+                e.Lap = Leader == null ? 0 : Leader.Live.Lap;
+                this.OnRaceEvent(e);
+            }
+        }
+
+        public void NotifyPitstop(RaceEvent.EventTypes type, Driver driver)
+        {
+            RaceEvent e;
+            if (type == Events.RaceEvent.EventTypes.PitEntry)
+                e = new PitEntryRaceEvent();
+            else
+                e = new PitExitRaceEvent();
+
+            e.SessionTime = _telemetry.SessionTime.Value;
+            e.Lap = driver.Live.Lap;
+            this.OnRaceEvent(e);
         }
 
         #endregion
@@ -377,6 +430,10 @@ namespace iRacingSimulator
             // Store current session number
             _currentSessionNumber = e.TelemetryInfo.SessionNum.Value;
 
+            // Get previous state
+            var sessionWasFinished = this.SessionData.IsFinished;
+            var prevFlags = this.SessionData.Flags;
+
             // Update session state
             _sessionData.UpdateState(e.TelemetryInfo.SessionState.Value);
 
@@ -385,6 +442,25 @@ namespace iRacingSimulator
 
             // Update session data
             this.SessionData.Update(e.TelemetryInfo);
+
+            // Check if flags updated
+            this.CheckSessionFlagUpdates(prevFlags, this.SessionData.Flags);
+
+            if (!sessionWasFinished && this.SessionData.IsFinished)
+            {
+                // If session just finished, get winners
+                // Use result position (not live position)
+                var winners =
+                    Drivers.Where(d => d.CurrentResults.ClassPosition == 1).OrderBy(d => d.CurrentResults.Position);
+                foreach (var winner in winners)
+                {
+                    var ev = new WinnerRaceEvent();
+                    ev.Driver = winner;
+                    ev.SessionTime = _telemetry.SessionTime.Value;
+                    ev.Lap = winner.Live.Lap;
+                    this.OnRaceEvent(ev);
+                }
+            }
 
             this.OnTelemetryUpdated(e);
         }
@@ -406,10 +482,7 @@ namespace iRacingSimulator
         public event EventHandler<SdkWrapper.TelemetryUpdatedEventArgs> TelemetryUpdated;
         public event EventHandler SimulationUpdated;
 
-        public event EventHandler<DriverSwapEventArgs> DriverSwapEvent;
-        public event EventHandler<PitstopEventArgs> PitstopEvent;
-        public event EventHandler<FastLapEventArgs> FastLapEvent;
-        public event EventHandler<LeaderChangeEventArgs> LeaderChangeEvent;
+        public EventHandler<RaceEventArgs> RaceEvent;
 
         protected virtual void OnConnected()
         {
@@ -441,102 +514,22 @@ namespace iRacingSimulator
             if (this.SimulationUpdated != null) this.SimulationUpdated(this, EventArgs.Empty);
         }
 
-        protected virtual void OnDriverSwap(DriverSwapEventArgs e)
+        protected virtual void OnRaceEvent(RaceEvent @event)
         {
-            if (this.DriverSwapEvent != null) this.DriverSwapEvent(this, e);
+            if (this.RaceEvent != null) this.RaceEvent(this, new RaceEventArgs(@event));
         }
 
-        protected virtual void OnPitstop(PitstopEventArgs e)
+        public class RaceEventArgs : EventArgs
         {
-            if (this.PitstopEvent != null) this.PitstopEvent(this, e);
-        }
-
-        protected virtual void OnFastLap(FastLapEventArgs e)
-        {
-            if (this.FastLapEvent != null) this.FastLapEvent(this, e);
-        }
-
-        protected virtual void OnLeaderChange(LeaderChangeEventArgs e)
-        {
-            if (this.LeaderChangeEvent != null) this.LeaderChangeEvent(this, e);
-        }
-
-        public class DriverSwapEventArgs : RaceEventArgs
-        {
-            public DriverSwapEventArgs(int prevDriverId, int newDriverId, string prevDriverName, string newDriverName, Driver driver, double time)
-                :base (time)
+            public RaceEventArgs(RaceEvent @event)
             {
-                this.PreviousDriverId = prevDriverId;
-                this.NewDriverId = newDriverId;
-                this.PreviousDriverName = prevDriverName;
-                this.NewDriverName = newDriverName;
-                this.NewDriver = driver;
+                _event = @event;
             }
 
-            public int PreviousDriverId { get; set; }
-            public int NewDriverId { get; set; }
-
-            public string PreviousDriverName { get; set; }
-            public string NewDriverName { get; set; }
-
-            public Driver NewDriver { get; set; }
+            private readonly RaceEvent _event;
+            public RaceEvent Event { get { return _event; } }
         }
-
-        public class PitstopEventArgs : RaceEventArgs
-        {
-            public PitstopEventArgs(PitstopUpdateTypes type, Driver driver, double time)
-                : base(time)
-            {
-                this.Type = type;
-                this.Driver = driver;
-            }
-
-            public PitstopUpdateTypes Type { get; set; }
-            public Driver Driver { get; set; }
-
-            public enum PitstopUpdateTypes
-            {
-                EnterPitLane = 0,
-                EnterPitStall = 1,
-                ExitPitStall = 2,
-                ExitPitLane = 3
-            }
-        }
-
-        public class LeaderChangeEventArgs : RaceEventArgs
-        {
-            public LeaderChangeEventArgs(Driver driver, double time)
-                : base(time)
-            {
-                this.Driver = driver;
-            }
-
-            public Driver Driver { get; set; }
-        }
-
-        public class FastLapEventArgs : RaceEventArgs
-        {
-            public FastLapEventArgs(Driver driver, BestLap lap, double time)
-                : base(time)
-            {
-                this.Driver = driver;
-                this.Lap = lap;
-            }
-
-            public Driver Driver { get; set; }
-            public BestLap Lap { get; set; }
-        }
-
-        public abstract class RaceEventArgs : EventArgs
-        {
-            protected RaceEventArgs(double time)
-            {
-                this.SessionTime = time;
-            }
-
-            public double SessionTime { get; set; }
-        }
-
+        
         #endregion
 
         #endregion

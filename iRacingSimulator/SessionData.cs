@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using iRacingSdkWrapper;
+using iRacingSdkWrapper.Bitfields;
 using iRacingSimulator.Drivers;
 
 namespace iRacingSimulator
@@ -26,6 +27,7 @@ namespace iRacingSimulator
         public Dictionary<int, BestLap> ClassBestLaps { get; set; }
         public BestLap OverallBestLap { get; set; }
         
+        public SessionFlag Flags { get; set; }
         public SessionStates State { get; set; }
         public bool IsFinished { get; set; }
 
@@ -47,12 +49,13 @@ namespace iRacingSimulator
         {
             this.SessionTime = telemetry.SessionTime.Value;
             this.TimeRemaining = telemetry.SessionTimeRemain.Value;
+            this.Flags = telemetry.SessionFlags.Value;
         }
 
         public void UpdateState(SessionStates state)
         {
             this.State = state;
-            this.IsFinished = state == SessionStates.Checkered || state == SessionStates.CoolDown;
+            this.IsFinished = state == SessionStates.CoolDown;
         }
 
         public BestLap UpdateFastestLap(Laptime lap, Driver driver)

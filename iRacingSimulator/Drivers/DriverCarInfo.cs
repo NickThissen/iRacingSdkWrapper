@@ -13,5 +13,6 @@ namespace iRacingSimulator.Drivers
         public int CarClassId { get; set; }
         public int CarClassRelSpeed { get; set; }
         public Color CarClassColor { get; set; }
+        public string CarClassShortName;
     }
 }
