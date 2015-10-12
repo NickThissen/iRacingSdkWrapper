@@ -35,6 +35,11 @@ namespace iRacingSdkWrapper
                                     this.CarIdxSteer,
                                     this.CarIdxRPM,
                                     this.CarIdxGear,
+                                    this.CarIdxF2Time,
+                                    this.CarIdxEstTime,
+                                    this.CarIdxOnPitRoad,
+                                    this.CarIdxPosition,
+                                    this.CarIdxClassPosition,
                                     this.SteeringWheelAngle,
                                     this.Throttle,
                                     this.Brake,
@@ -168,6 +173,16 @@ namespace iRacingSdkWrapper
         /// -1=reverse  0=neutral  1..n=current gear by car index. 
         /// </summary>
         public TelemetryValue<int[]> CarIdxGear { get { return new TelemetryValue<int[]>(sdk, "CarIdxGear"); } }
+
+        public TelemetryValue<float[]> CarIdxF2Time { get { return new TelemetryValue<float[]>(sdk, "CarIdxF2Time"); } }
+
+        public TelemetryValue<float[]> CarIdxEstTime { get { return new TelemetryValue<float[]>(sdk, "CarIdxEstTime"); } }
+
+        public TelemetryValue<bool[]> CarIdxOnPitRoad { get { return new TelemetryValue<bool[]>(sdk, "CarIdxOnPitRoad"); } }
+
+        public TelemetryValue<int[]> CarIdxPosition { get { return new TelemetryValue<int[]>(sdk, "CarIdxPosition"); } }
+
+        public TelemetryValue<int[]> CarIdxClassPosition { get { return new TelemetryValue<int[]>(sdk, "CarIdxClassPosition"); } }
 
 
         /// <summary>

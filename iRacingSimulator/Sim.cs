@@ -20,7 +20,6 @@ namespace iRacingSimulator
 
         private TelemetryInfo _telemetry, _previousTelemetry;
         private SessionInfo _sessionInfo, _previousSessionInfo;
-        private Driver _driver;
 
         private bool _mustUpdateSessionData, _mustReloadDrivers;
 
@@ -55,7 +54,11 @@ namespace iRacingSimulator
         private SessionData _sessionData;
         public SessionData SessionData { get { return _sessionData; } }
 
+        private Driver _driver;
         public Driver Driver { get { return _driver; } }
+
+        private Driver _leader;
+        public Driver Leader{ get { return _leader; } }
 
         #endregion
 
@@ -77,8 +80,6 @@ namespace iRacingSimulator
 
         private readonly List<Driver> _drivers;
         public List<Driver> Drivers { get { return _drivers; } }
-
-        public Driver Leader { get; set; }
 
         private bool _isUpdatingDrivers;
 
@@ -271,7 +272,7 @@ namespace iRacingSimulator
                 int pos = 1;
                 foreach (var driver in _drivers.OrderByDescending(d => d.Live.TotalLapDistance))
                 {
-                    if (pos == 1) this.Leader = driver;
+                    if (pos == 1) _leader = driver;
                     driver.Live.Position = pos;
                     pos++;
                 }
@@ -298,7 +299,7 @@ namespace iRacingSimulator
                 // In P or Q, set live position from result position (== best lap according to iRacing)
                 foreach (var driver in _drivers.OrderBy(d => d.Results.Current.Position))
                 {
-                    if (this.Leader == null) this.Leader = driver;
+                    if (this.Leader == null) _leader = driver;
                     driver.Live.Position = driver.Results.Current.Position;
                     driver.Live.ClassPosition = driver.Results.Current.ClassPosition;
                 }
@@ -493,8 +494,7 @@ namespace iRacingSimulator
         public event EventHandler<SdkWrapper.SessionInfoUpdatedEventArgs> SessionInfoUpdated;
         public event EventHandler<SdkWrapper.TelemetryUpdatedEventArgs> TelemetryUpdated;
         public event EventHandler SimulationUpdated;
-
-        public EventHandler<RaceEventArgs> RaceEvent;
+        public event EventHandler<RaceEventArgs> RaceEvent;
 
         protected virtual void OnConnected()
         {

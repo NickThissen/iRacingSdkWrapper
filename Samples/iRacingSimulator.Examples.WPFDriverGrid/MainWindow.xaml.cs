@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using iRacingSimulator.Events;
 
 namespace iRacingSimulator.Examples.WPFDriverGrid
 {
@@ -36,7 +37,7 @@ namespace iRacingSimulator.Examples.WPFDriverGrid
             // Initialize the sim communication
             Sim.Instance.SessionInfoUpdated += OnSessionInfoUpdated;
             Sim.Instance.TelemetryUpdated += OnTelemetryUpdated;
-            Sim.Instance.DriverSwapEvent += OnDriverSwapEvent;
+            Sim.Instance.RaceEvent += OnRaceEvent;
             Sim.Instance.Start();
         }
 
@@ -80,9 +81,13 @@ namespace iRacingSimulator.Examples.WPFDriverGrid
             double sessionTime = e.TelemetryInfo.SessionTime.Value;
         }
 
-        private void OnDriverSwapEvent(object sender, Sim.DriverSwapEventArgs e)
+        private void OnRaceEvent(object sender, Sim.RaceEventArgs e)
         {
-            MessageBox.Show(string.Format("Driver {0} replaced driver {1}.", e.PreviousDriverName, e.NewDriverName));
+            if (e.Event.Type == RaceEvent.EventTypes.DriverSwap)
+            {
+                var swapEvent = (DriverSwapRaceEvent)e.Event;
+                MessageBox.Show(string.Format("Driver {0} replaced driver {1}.", swapEvent.PreviousDriverName, swapEvent.CurrentDriverName));
+            }
         }
     }
 }
