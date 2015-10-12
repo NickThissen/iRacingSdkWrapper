@@ -20,6 +20,7 @@ namespace iRacingSimulator
 
         private TelemetryInfo _telemetry, _previousTelemetry;
         private SessionInfo _sessionInfo, _previousSessionInfo;
+        private Driver _driver;
 
         private bool _mustUpdateSessionData, _mustReloadDrivers;
 
@@ -53,6 +54,8 @@ namespace iRacingSimulator
 
         private SessionData _sessionData;
         public SessionData SessionData { get { return _sessionData; } }
+
+        public Driver Driver { get { return _driver; } }
 
         #endregion
 
@@ -108,6 +111,8 @@ namespace iRacingSimulator
                     // If no driver found, end of list reached
                     if (driver == null) break;
 
+                    driver.IsCurrentDriver = false;
+
                     // Add to list
                     _drivers.Add(driver);
                 }
@@ -131,6 +136,12 @@ namespace iRacingSimulator
 
                         this.OnRaceEvent(e);
                     }
+                }
+
+                if (_sdk.DriverId == driver.Id)
+                {
+                    _driver = driver;
+                    _driver.IsCurrentDriver = true;
                 }
             }
         }
@@ -240,12 +251,13 @@ namespace iRacingSimulator
             // If currently updating list, no need to update telemetry info 
             if (_isUpdatingDrivers) return;
 
+            if (_driver != null) _driver.UpdatePrivateInfo(info);
             foreach (var driver in _drivers)
             {
                 driver.UpdateLiveInfo(info);
                 driver.Live.CalculateSpeed(_previousTelemetry, _telemetry, _sessionData.Track.Length);
             }
-
+            
             this.CalculateLivePositions();
             this.UpdateTimeDelta();
         }
