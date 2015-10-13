@@ -35,22 +35,26 @@ namespace iRacingSimulator.Drivers
 
         public void CalculatePitInfo()
         {
+            // If we are not in the world (blinking?), stop checking
             if (_driver.Live.TrackSurface == TrackSurfaces.NotInWorld) return;
             
+            // Are we NOW in pit lane (pitstall includes pitlane)
             this.InPitLane = _driver.Live.TrackSurface == TrackSurfaces.AproachingPits ||
                         _driver.Live.TrackSurface == TrackSurfaces.InPitStall;
+
+            // Are we NOW in pit stall?
             this.InPitStall = _driver.Live.TrackSurface == TrackSurfaces.InPitStall;
+
 
             this.CurrentStint = _driver.Results.Current.LapsComplete - this.LastPitLap;
 
-            // Are we already in pitlane?
+            // Were we already in pitlane previously?
             if (this.PitLaneEntryTime == null)
             {
                 // We were not previously in pitlane
-
                 if (this.InPitLane)
                 {
-                    // We have now entered pitlane
+                    // We have only just now entered pitlane
                     this.PitLaneEntryTime = DateTime.UtcNow;
                     this.CurrentPitLaneTimeSeconds = 0;
                     
@@ -62,14 +66,13 @@ namespace iRacingSimulator.Drivers
                 // We were already in pitlane but have not exited yet
                 this.CurrentPitLaneTimeSeconds = (DateTime.UtcNow - this.PitLaneEntryTime.Value).TotalSeconds;
 
-                // Are we already in pit stall?
+                // Were we already in pit stall?
                 if (this.PitStallEntryTime == null)
                 {
                     // We were not previously in our pit stall yet
-
                     if (this.InPitStall)
                     {
-                        // We have just entered our pit stall
+                        // We have only just now entered our pit stall
                         this.PitStallEntryTime = DateTime.UtcNow;
                         this.CurrentPitStallTimeSeconds = 0;
                     }
@@ -83,8 +86,7 @@ namespace iRacingSimulator.Drivers
                     if (!this.InPitStall)
                     {
                         // We have now left our pit stall
-                        this.LastPitStallTimeSeconds =
-                                (DateTime.UtcNow - this.PitStallEntryTime.Value).TotalSeconds;
+                        this.LastPitStallTimeSeconds = (DateTime.UtcNow - this.PitStallEntryTime.Value).TotalSeconds;
 
                         this.CurrentPitStallTimeSeconds = 0;
 
@@ -94,11 +96,12 @@ namespace iRacingSimulator.Drivers
                             if (Math.Abs(diff.TotalSeconds) < 5)
                             {
                                 // Sim detected pit stall exit again less than 5 seconds after previous exit.
-                                // This is not possible
+                                // This is not possible?
                                 return;
                             }
                         }
                         
+                        // Now increment pitstop count
                         this.Pitstops += 1;
                         this.LastPitLap = _driver.Results.Current.LapsComplete;
                         this.CurrentStint = 0;
@@ -112,7 +115,6 @@ namespace iRacingSimulator.Drivers
                 if (!this.InPitLane)
                 {
                     // We have now left pitlane
-
                     this.LastPitLaneTimeSeconds =
                         (DateTime.UtcNow - this.PitLaneEntryTime.Value).TotalSeconds;
                     this.CurrentPitLaneTimeSeconds = 0;
