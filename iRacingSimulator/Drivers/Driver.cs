@@ -15,6 +15,7 @@ namespace iRacingSimulator.Drivers
             this.Results = new DriverResults(this);
             this.QualyResults = new DriverQualyResults(this);
             this.Live = new DriverLiveInfo(this);
+            this.Championship = new DriverChampInfo(this);
             this.Private = new DriverPrivateInfo(this);
         }
 
@@ -49,6 +50,7 @@ namespace iRacingSimulator.Drivers
         public DriverSessionResults CurrentResults { get; set; }
         public DriverQualyResults QualyResults { get; set; }
         public DriverLiveInfo Live { get; private set; }
+        public DriverChampInfo Championship { get; private set; }
         public DriverPrivateInfo Private { get; private set; }
 
         public string LongDisplay

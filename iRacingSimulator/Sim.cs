@@ -360,6 +360,8 @@ namespace iRacingSimulator
 
         private void CheckSessionFlagUpdates(SessionFlag prevFlags, SessionFlag curFlags)
         {
+            if (prevFlags == null || curFlags == null) return;
+
             var go = SessionFlags.StartGo;
             var green = SessionFlags.Green;
             var yellow = SessionFlags.Caution;
@@ -386,12 +388,13 @@ namespace iRacingSimulator
 
         public void NotifyPitstop(RaceEvent.EventTypes type, Driver driver)
         {
-            RaceEvent e;
+            DriverRaceEvent e;
             if (type == Events.RaceEvent.EventTypes.PitEntry)
                 e = new PitEntryRaceEvent();
             else
                 e = new PitExitRaceEvent();
 
+            e.Driver = driver;
             e.SessionTime = _telemetry.SessionTime.Value;
             e.Lap = driver.Live.Lap;
             this.OnRaceEvent(e);
@@ -464,7 +467,7 @@ namespace iRacingSimulator
                 // If session just finished, get winners
                 // Use result position (not live position)
                 var winners =
-                    Drivers.Where(d => d.CurrentResults.ClassPosition == 1).OrderBy(d => d.CurrentResults.Position);
+                    Drivers.Where(d => d.CurrentResults != null && d.CurrentResults.ClassPosition == 1).OrderBy(d => d.CurrentResults.Position);
                 foreach (var winner in winners)
                 {
                     var ev = new WinnerRaceEvent();
