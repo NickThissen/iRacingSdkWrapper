@@ -40,8 +40,6 @@ namespace iRacingSimulator.Drivers
         public string DeltaToLeader { get; set; }
         public string DeltaToNext { get; set; }
 
-        public Sector CurrentSector { get; set; }
-
         public void ParseTelemetry(TelemetryInfo e)
         {
             this.Lap = e.CarIdxLap.Value[this.Driver.Id];

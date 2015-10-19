@@ -84,6 +84,7 @@ namespace iRacingSimulator.Drivers
             _sessionNumber = sessionNumber;
 
             this.Laps = new LaptimeCollection();
+            this.SectorTimes = new List<Laptime>();
             this.IsEmpty = true;
         }
 
@@ -110,11 +111,11 @@ namespace iRacingSimulator.Drivers
         
         public LaptimeCollection Laps { get; set; }
 
-        public Sector[] SectorTimes { get; set; }
+        public List<Laptime> SectorTimes { get; set; }
 
-        public Sector Sector1 { get; set; }
-        public Sector Sector2 { get; set; }
-        public Sector Sector3 { get; set; }
+        public Laptime Sector1 { get; set; }
+        public Laptime Sector2 { get; set; }
+        public Laptime Sector3 { get; set; }
 
         public string OutReason { get; set; }
         public int OutReasonId { get; set; }
