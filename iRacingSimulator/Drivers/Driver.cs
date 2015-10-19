@@ -144,11 +144,77 @@ namespace iRacingSimulator.Drivers
 
         public void UpdateSectorTimes(Track track, TelemetryInfo previousTelemetry, TelemetryInfo telemetry)
         {
-            var results = this.CurrentResults;
-            if (results != null)
-            {
-                
-            }
+//            var results = this.CurrentResults;
+//            if (results == null) return;
+//
+//            // Reset if nr of sectors doesn't match
+//            if (results.SectorTimes == null || results.SectorTimes.Length != track.Sectors.Count)
+//            {
+//                results.SectorTimes = new Sector[track.Sectors.Count];
+//            }
+//
+//            var t0 = previousTelemetry.SessionTime.Value;
+//            var x0 = previousTelemetry.CarIdxLapDistPct.Value[this.Id];
+//
+//            var t1 = telemetry.SessionTime.Value;
+//            var x1 = telemetry.CarIdxLapDistPct.Value[this.Id];
+//
+//            var dt = t1 - t0;
+//            var dx = x1 - x0;
+//
+//            Sector crossedSector = null;
+//
+//            // Check for finish crossing
+//            if (x0 - x1 > 0.5)
+//            {
+//                // Crossed start/finish
+//                crossedSector = results.SectorTimes[0];
+//            }
+//            else
+//            {
+//                // Check for sector crossing
+//                foreach (var sector in track.Sectors)
+//                {
+//                    if (x1 >= sector.StartPercentage && x0 < sector.StartPercentage)
+//                    {
+//                        crossedSector = sector;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            if (crossedSector != null)
+//            {
+//                var x = crossedSector.StartPercentage;
+//                var num = crossedSector.Number;
+//                var prevNum = (num - 1) % track.Sectors.Count;
+//
+//                // Crossing time (linearly interpolated)
+//                var t = t0 + (x - x0) * (dt / dx);
+//
+//                var sector = results.SectorTimes[num];
+//                var prevSector = results.SectorTimes[prevNum];
+//                if (sector == null && prevSector != null)
+//                {
+//                    sector = new Sector();
+//                    sector.Number = crossedSector.Number;
+//                    sector.StartPercentage = crossedSector.StartPercentage;
+//                    sector.SectorTime = new Laptime((float)(t - ));
+//                }
+//
+//                if (prevSector != null)
+//                {
+//                    prevSector.SectorTime = new Laptime((float)(t - prevSector.EnterSessionTime));
+//                }
+//
+//                // Crossed into new sector
+//                var s = new Sector();
+//                s.Number = crossedSector.Number;
+//                s.StartPercentage = crossedSector.StartPercentage;
+//                s.EnterSessionTime = t;
+//                results.SectorTimes[num] = s;
+//                this.Live.CurrentSector = s;
+//            }
         }
     }
 }
