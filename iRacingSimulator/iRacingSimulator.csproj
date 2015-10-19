@@ -52,6 +52,7 @@
     <Compile Include="Events\RaceEvent.cs" />
     <Compile Include="Laptime.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="Sector.cs" />
     <Compile Include="SessionData.cs" />
     <Compile Include="Sim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
