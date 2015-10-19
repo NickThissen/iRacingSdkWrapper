@@ -141,5 +141,14 @@ namespace iRacingSimulator.Drivers
         {
             this.Private.ParseTelemetry(e);
         }
+
+        public void UpdateSectorTimes(Track track, TelemetryInfo previousTelemetry, TelemetryInfo telemetry)
+        {
+            var results = this.CurrentResults;
+            if (results != null)
+            {
+                
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using iRacingSdkWrapper;
 
 namespace iRacingSimulator.Drivers
@@ -38,7 +39,7 @@ namespace iRacingSimulator.Drivers
         
         public string DeltaToLeader { get; set; }
         public string DeltaToNext { get; set; }
-        
+
         public void ParseTelemetry(TelemetryInfo e)
         {
             this.Lap = e.CarIdxLap.Value[this.Driver.Id];
