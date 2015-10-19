@@ -256,6 +256,7 @@ namespace iRacingSimulator
             foreach (var driver in _drivers)
             {
                 driver.UpdateLiveInfo(info);
+                driver.UpdateSectorTimes(_sessionData.Track, _previousTelemetry, _telemetry);
                 driver.Live.CalculateSpeed(_previousTelemetry, _telemetry, _sessionData.Track.Length);
             }
             
@@ -308,7 +309,7 @@ namespace iRacingSimulator
             if (this.Leader != null && this.Leader.CurrentResults != null)
                 _sessionData.LeaderLap = this.Leader.CurrentResults.LapsComplete + 1;
         }
-
+        
         private void UpdateTimeDelta()
         {
             if (_timeDelta == null) return;
