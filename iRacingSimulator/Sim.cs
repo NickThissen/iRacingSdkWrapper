@@ -276,23 +276,6 @@ namespace iRacingSimulator
                     driver.Live.Position = pos;
                     pos++;
                 }
-
-                // Determine live class position from live positions and class
-                // Group drivers in dictionary with key = classid and value = list of all drivers in that class
-                var dict = (from driver in _drivers
-                            group driver by driver.Car.CarClassId)
-                    .ToDictionary(d => d.Key, d => d.ToList());
-
-                // Set class position
-                foreach (var drivers in dict.Values)
-                {
-                    pos = 1;
-                    foreach (var driver in drivers.OrderBy(d => d.Live.Position))
-                    {
-                        driver.Live.ClassPosition = pos;
-                        pos++;
-                    }
-                }
             }
             else
             {
@@ -301,7 +284,24 @@ namespace iRacingSimulator
                 {
                     if (this.Leader == null) _leader = driver;
                     driver.Live.Position = driver.Results.Current.Position;
-                    driver.Live.ClassPosition = driver.Results.Current.ClassPosition;
+                    //driver.Live.ClassPosition = driver.Results.Current.ClassPosition;
+                }
+            }
+
+            // Determine live class position from live positions and class
+            // Group drivers in dictionary with key = classid and value = list of all drivers in that class
+            var dict = (from driver in _drivers
+                        group driver by driver.Car.CarClassId)
+                .ToDictionary(d => d.Key, d => d.ToList());
+
+            // Set class position
+            foreach (var drivers in dict.Values)
+            {
+                var pos = 1;
+                foreach (var driver in drivers.OrderBy(d => d.Live.Position))
+                {
+                    driver.Live.ClassPosition = pos;
+                    pos++;
                 }
             }
 
