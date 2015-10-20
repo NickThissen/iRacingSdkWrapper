@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using iRacingSdkWrapper;
 
 namespace iRacingSimulator.Drivers
@@ -144,10 +145,66 @@ namespace iRacingSimulator.Drivers
 
         public void UpdateSectorTimes(Track track, TelemetryInfo previousTelemetry, TelemetryInfo telemetry)
         {
+            if (track == null) return;
+            if (track.Sectors.Count == 0) return;
+
             var results = this.CurrentResults;
             if (results != null)
             {
-                
+                // Set array
+                if (results.SectorTimes == null || results.SectorTimes.Length == 0)
+                {
+                    results.SectorTimes = track.Sectors.Select(s => s.Copy()).ToArray();
+                }
+
+                var p0 = previousTelemetry.CarIdxLapDistPct.Value[this.Id];
+                var p1 = telemetry.CarIdxLapDistPct.Value[this.Id];
+                var dp = p1 - p0;
+
+                var t = telemetry.SessionTime.Value;
+
+                // Check lap crossing
+                if (p0 - p1 > 0.5) // more than 50% jump in track distance == lap crossing occurred from 0.99xx -> 0.00x
+                {
+                    var crossTime = (float)(t - (p1 * dp)); // linear interpolation of actual crossing time (somewhere between t0 and t1)
+
+                    // Finish previous sector
+                    var sector = results.SectorTimes.Last();
+                    if (sector != null && sector.EnterSessionTime > 0)
+                    {
+                        sector.SectorTime = new Laptime(crossTime - sector.EnterSessionTime);
+                    }
+
+                    // Begin first sector
+                    sector = results.SectorTimes[0];
+                    sector.EnterSessionTime = crossTime;
+
+                    this.Live.CurrentSector = 0;
+                }
+                else
+                {
+                    // Check all sectors
+                    foreach (var s in results.SectorTimes)
+                    {
+                        if (p1 > s.StartPercentage && s.Number > this.Live.CurrentSector)
+                        {
+                            // Crossed into new sector
+                            var crossTime = (float)(t - (p1 - s.StartPercentage) * dp);
+
+                            // Finish previous
+                            var sector = results.SectorTimes[s.Number - 1];
+                            if (sector != null && sector.EnterSessionTime > 0)
+                            {
+                                sector.SectorTime = new Laptime(crossTime - sector.EnterSessionTime);
+                            }
+
+                            // Begin next sector
+                            s.EnterSessionTime = crossTime;
+
+                            this.Live.CurrentSector = s.Number;
+                        }
+                    }
+                }
             }
         }
     }
