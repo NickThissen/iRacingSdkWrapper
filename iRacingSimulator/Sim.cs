@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,10 @@ namespace iRacingSimulator
             get { return _instance.Value; }
         }
 
-        private TelemetryInfo _telemetry, _previousTelemetry;
-        private SessionInfo _sessionInfo, _previousSessionInfo;
+        private TelemetryInfo _telemetry;
+        private SessionInfo _sessionInfo;
 
         private bool _mustUpdateSessionData, _mustReloadDrivers;
-
         private TimeDelta _timeDelta;
 
         private Sim()
@@ -255,9 +255,9 @@ namespace iRacingSimulator
             if (_driver != null) _driver.UpdatePrivateInfo(info);
             foreach (var driver in _drivers)
             {
+                driver.Live.CalculateSpeed(info, _sessionData.Track.Length);
                 driver.UpdateLiveInfo(info);
-                driver.UpdateSectorTimes(_sessionData.Track, _previousTelemetry, _telemetry);
-                driver.Live.CalculateSpeed(_previousTelemetry, _telemetry, _sessionData.Track.Length);
+                driver.UpdateSectorTimes(_sessionData.Track, info);
             }
             
             this.CalculateLivePositions();
@@ -407,8 +407,7 @@ namespace iRacingSimulator
 
         private void SdkOnSessionInfoUpdated(object sender, SdkWrapper.SessionInfoUpdatedEventArgs e)
         {
-            // Cache previous and current info
-            _previousSessionInfo = _sessionInfo;
+            // Cache info
             _sessionInfo = e.SessionInfo;
 
             // Stop if we don't have a session number yet
@@ -431,10 +430,9 @@ namespace iRacingSimulator
 
         private void SdkOnTelemetryUpdated(object sender, SdkWrapper.TelemetryUpdatedEventArgs e)
         {
-            // Cache previous and current info
-            _previousTelemetry = _telemetry;
+            // Cache info
             _telemetry = e.TelemetryInfo;
-
+            
             // Check if session changed
             if (_currentSessionNumber == null || (_currentSessionNumber.Value != e.TelemetryInfo.SessionNum.Value))
             {
@@ -478,7 +476,6 @@ namespace iRacingSimulator
                     this.OnRaceEvent(ev);
                 }
             }
-
             this.OnTelemetryUpdated(e);
         }
 

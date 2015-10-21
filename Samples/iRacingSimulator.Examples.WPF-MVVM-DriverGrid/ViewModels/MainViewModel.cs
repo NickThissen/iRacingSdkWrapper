@@ -36,8 +36,15 @@ namespace iRacingSimulator.Examples.WPF_MVVM_DriverGrid.ViewModels
             }
         }
 
+        private double _lastUpdate;
+
         public override void OnTelemetryUpdated(TelemetryInfo info, double updateTime)
         {
+            if (updateTime - _lastUpdate > 1)
+            {
+                _driversView.Refresh();
+                _lastUpdate = updateTime;
+            }
         }
     }
 }

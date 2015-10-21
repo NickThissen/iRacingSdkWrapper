@@ -79,6 +79,8 @@ namespace iRacingSimulator.Examples.WPFDriverGrid
         {
             // No need to do anything here in this example, but you can access all telemetry:
             double sessionTime = e.TelemetryInfo.SessionTime.Value;
+
+            this.RefreshGrid();
         }
 
         private void OnRaceEvent(object sender, Sim.RaceEventArgs e)

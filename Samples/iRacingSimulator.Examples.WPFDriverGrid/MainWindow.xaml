@@ -4,18 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iRacingSimulator.Examples.WPFDriverGrid"
+        xmlns:drivers="clr-namespace:iRacingSimulator.Drivers;assembly=iRacingSimulator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="825">
     <Grid>
         <DataGrid x:Name="grid" AutoGenerateColumns="False" ItemsSource="{Binding}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Custid}" Header="Customer ID" />
+                <DataGridTextColumn Binding="{Binding Live.Position}" Header="Position" />
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                 <DataGridTextColumn Binding="{Binding CarNumber}" Header="Car #" />
-                <DataGridTextColumn Binding="{Binding IRating}" Header="iRating" />
-                <DataGridTextColumn Binding="{Binding Live.Position}" Header="Position" />
-                <DataGridTextColumn Binding="{Binding CurrentResults.LastTime.Display}" Header="Last laptime" />
+                <DataGridTextColumn Binding="{Binding Live.Speed}" Header="Speed" />
+                <DataGridTextColumn Binding="{Binding PitInfo.Pitstops}" Header="Pitstops" />
                 <DataGridTextColumn Binding="{Binding PitInfo.LastPitLaneTimeSeconds}" Header="Last pitstop" />
+                <DataGridTextColumn Binding="{Binding CurrentResults.SectorsDisplay}" Header="Sectors" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

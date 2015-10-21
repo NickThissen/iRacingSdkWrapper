@@ -9,13 +9,15 @@
     <Grid>
         <DataGrid x:Name="grid" AutoGenerateColumns="False" ItemsSource="{Binding DriversView}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Custid}" Header="Customer ID" />
+                <DataGridTextColumn Binding="{Binding Live.Position}" Header="Position" />
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                 <DataGridTextColumn Binding="{Binding CarNumber}" Header="Car #" />
-                <DataGridTextColumn Binding="{Binding IRating}" Header="iRating" />
-                <DataGridTextColumn Binding="{Binding Live.Position}" Header="Position" />
-                <DataGridTextColumn Binding="{Binding CurrentResults.LastTime.Display}" Header="Last laptime" />
+                <DataGridTextColumn Binding="{Binding Live.Speed}" Header="Speed" />
+                <DataGridTextColumn Binding="{Binding PitInfo.Pitstops}" Header="Pitstops" />
                 <DataGridTextColumn Binding="{Binding PitInfo.LastPitLaneTimeSeconds}" Header="Last pitstop" />
+                <DataGridTextColumn Binding="{Binding CurrentResults.FakeSector1.SectorTime.DisplayShort}" Header="S1" />
+                <DataGridTextColumn Binding="{Binding CurrentResults.FakeSector2.SectorTime.DisplayShort}" Header="S2" />
+                <DataGridTextColumn Binding="{Binding CurrentResults.FakeSector3.SectorTime.DisplayShort}" Header="S3" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

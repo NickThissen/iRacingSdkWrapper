@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using iRacingSdkWrapper;
 
 namespace iRacingSimulator.Drivers
@@ -7,6 +8,8 @@ namespace iRacingSimulator.Drivers
     [Serializable]
     public class DriverLiveInfo
     {
+        private const float SPEED_CALC_INTERVAL = 0.5f;
+
         public DriverLiveInfo(Driver driver)
         {
             _driver = driver;
@@ -36,11 +39,13 @@ namespace iRacingSimulator.Drivers
         public double SteeringAngle { get; private set; }
 
         public double Speed { get; private set; }
+        public double SpeedKmh { get; private set; }
         
         public string DeltaToLeader { get; set; }
         public string DeltaToNext { get; set; }
 
         public int CurrentSector { get; set; }
+        public int CurrentFakeSector { get; set; }
 
         public void ParseTelemetry(TelemetryInfo e)
         {
@@ -52,25 +57,51 @@ namespace iRacingSimulator.Drivers
             this.Rpm = e.CarIdxRPM.Value[this.Driver.Id];
             this.SteeringAngle = e.CarIdxSteer.Value[this.Driver.Id];
 
-            this.Driver.PitInfo.CalculatePitInfo();
+            this.Driver.PitInfo.CalculatePitInfo(e.SessionTime.Value);
         }
 
-        public void CalculateSpeed(TelemetryInfo previous, TelemetryInfo current, double? trackLengthKm)
+        private double _prevSpeedUpdateTime;
+        private double _prevSpeedUpdateDist;
+
+        public void CalculateSpeed(TelemetryInfo current, double? trackLengthKm)
         {
-            if (previous == null || current == null) return;
+            if (current == null) return;
             if (trackLengthKm == null) return;
 
             try
             {
-                var distancePct = current.CarIdxLapDistPct.Value[this.Driver.Id] -
-                                  previous.CarIdxLapDistPct.Value[this.Driver.Id];
-                var distance = distancePct*trackLengthKm.GetValueOrDefault();
+                var t1 = current.SessionTime.Value;
+                var t0 = _prevSpeedUpdateTime;
+                var time = t1 - t0;
 
-                var time = current.SessionTime.Value - previous.SessionTime.Value;
+                if (time < SPEED_CALC_INTERVAL)
+                {
+                    // Ignore
+                    return;
+                }
+
+                var p1 = current.CarIdxLapDistPct.Value[this.Driver.Id];
+                var p0 = _prevSpeedUpdateDist;
+
+                if (p1 < -0.5 || _driver.Live.TrackSurface == TrackSurfaces.NotInWorld)
+                {
+                    // Not in world?
+                    return;
+                }
+
+                if (p0 - p1 > 0.5)
+                {
+                    // Lap crossing
+                    p1 += 1;
+                }
+                var distancePct = p1 - p0;
+
+                var distance = distancePct*trackLengthKm.GetValueOrDefault()*1000; //meters
+
 
                 if (time >= Double.Epsilon)
                 {
-                    this.Speed = distance/time;
+                    this.Speed = distance/(time); // m/s
                 }
                 else
                 {
@@ -79,6 +110,10 @@ namespace iRacingSimulator.Drivers
                     else
                         this.Speed = Double.PositiveInfinity;
                 }
+                this.SpeedKmh = this.Speed * 3.6;
+
+                _prevSpeedUpdateTime = t1;
+                _prevSpeedUpdateDist = p1;
             }
             catch (Exception ex)
             {

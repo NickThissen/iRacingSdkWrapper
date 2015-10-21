@@ -20,6 +20,8 @@ namespace iRacingSimulator.Examples.WPF_MVVM_DriverGrid
         {
             base.OnStartup(e);
 
+            _sdkViewModels = new List<SdkViewModel>();
+
             // Connect viewmodel and view
             var model = new MainViewModel();
             var view = new MainWindow();

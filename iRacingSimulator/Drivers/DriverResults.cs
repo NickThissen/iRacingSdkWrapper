@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using iRacingSdkWrapper;
 
 namespace iRacingSimulator.Drivers
@@ -85,6 +86,13 @@ namespace iRacingSimulator.Drivers
 
             this.Laps = new LaptimeCollection();
             this.IsEmpty = true;
+
+            this.FakeSectorTimes = new[]
+                    {
+                        new Sector() {Number = 0, StartPercentage = 0f},
+                        new Sector() {Number = 1, StartPercentage = 0.333f},
+                        new Sector() {Number = 2, StartPercentage = 0.666f}
+                    };
         }
 
         private readonly Driver _driver;
@@ -111,6 +119,31 @@ namespace iRacingSimulator.Drivers
         public LaptimeCollection Laps { get; set; }
 
         public Sector[] SectorTimes { get; set; }
+        public Sector[] FakeSectorTimes { get; set; }
+
+        public string SectorsDisplay
+        {
+            get
+            {
+                if (SectorTimes == null || SectorTimes.Length == 0) return "-";
+                return string.Join(",  ", SectorTimes.Select(s => s.SectorTime == null || s.SectorTime.Value == 0 ? "0.00" : s.SectorTime.DisplayShort));
+            }
+        }
+
+        public Sector FakeSector1
+        {
+            get { return FakeSectorTimes == null || FakeSectorTimes.Length == 0 ? null : FakeSectorTimes[0]; }
+        }
+
+        public Sector FakeSector2
+        {
+            get { return FakeSectorTimes == null || FakeSectorTimes.Length == 0 ? null : FakeSectorTimes[1]; }
+        }
+        
+        public Sector FakeSector3
+        {
+            get { return FakeSectorTimes == null || FakeSectorTimes.Length == 0 ? null : FakeSectorTimes[2]; }
+        }
 
         public string OutReason { get; set; }
         public int OutReasonId { get; set; }
