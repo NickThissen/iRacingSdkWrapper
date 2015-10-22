@@ -42,6 +42,11 @@ namespace iRacingSimulator.Drivers
         public bool IsPacecar { get; set; }
 
         public string HelmetDesign { get; set; }
+        public string CarDesign { get; set; }
+        public string SuitDesign { get; set; }
+        public string CarNumberDesign { get; set; }
+        public string CarSponsor1 { get; set; }
+        public string CarSponsor2 { get; set; }
 
         public string ClubName { get; set; }
         public string DivisionName { get; set; }
@@ -81,6 +86,11 @@ namespace iRacingSimulator.Drivers
             this.IsSpectator = Parser.ParseInt(query["IsSpectator"].GetValue()) == 1;
 
             this.HelmetDesign = query["HelmetDesignStr"].GetValue();
+            this.CarDesign = query["CarDesignStr"].GetValue();
+            this.SuitDesign = query["SuitDesignStr"].GetValue();
+            this.CarNumberDesign = query["CarNumberDesignStr"].GetValue();
+            this.CarSponsor1 = query["CarSponsor_1"].GetValue();
+            this.CarSponsor2 = query["CarSponsor_2"].GetValue();
             this.ClubName = query["ClubName"].GetValue();
             this.DivisionName = query["DivisionName"].GetValue();
         }

@@ -39,7 +39,7 @@ namespace iRacingSimulator.Drivers
         public double SteeringAngle { get; private set; }
 
         public double Speed { get; private set; }
-        public double SpeedKmh { get; private set; }
+        public double SpeedKph { get; private set; }
         
         public string DeltaToLeader { get; set; }
         public string DeltaToNext { get; set; }
@@ -110,7 +110,7 @@ namespace iRacingSimulator.Drivers
                     else
                         this.Speed = Double.PositiveInfinity;
                 }
-                this.SpeedKmh = this.Speed * 3.6;
+                this.SpeedKph = this.Speed * 3.6;
 
                 _prevSpeedUpdateTime = t1;
                 _prevSpeedUpdateDist = p1;
