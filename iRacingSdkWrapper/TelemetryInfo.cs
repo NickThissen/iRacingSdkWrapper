@@ -86,7 +86,16 @@ namespace iRacingSdkWrapper
                                     this.OilLevel,
                                     this.Voltage,
                                     this.SessionTimeRemain,
-                                    this.ReplayFrameNumEnd
+                                    this.ReplayFrameNumEnd,
+                                    this.AirDensity,
+                                    this.AirPressure,
+                                    this.AirTemp,
+                                    this.FogLevel,
+                                    this.Skies,
+                                    this.TrackTemp,
+                                    this.WeatherType,
+                                    this.WindDir,
+                                    this.WindVel
                                 });
             return values;
         }
@@ -463,5 +472,23 @@ namespace iRacingSdkWrapper
         public TelemetryValue<double> SessionTimeRemain { get { return new TelemetryValue<double>(sdk, "SessionTimeRemain"); } }
 
         public TelemetryValue<int> ReplayFrameNumEnd { get { return new TelemetryValue<int>(sdk, "ReplayFrameNumEnd"); } }
+
+        public TelemetryValue<float> AirDensity { get { return new TelemetryValue<float>(sdk, "AirDensity"); } }
+
+        public TelemetryValue<float> AirPressure { get { return new TelemetryValue<float>(sdk, "AirPressure"); } }
+
+        public TelemetryValue<float> AirTemp { get { return new TelemetryValue<float>(sdk, "AirTemp"); } }
+
+        public TelemetryValue<float> FogLevel { get { return new TelemetryValue<float>(sdk, "FogLevel"); } }
+
+        public TelemetryValue<int> Skies { get { return new TelemetryValue<int>(sdk, "Skies"); } }
+
+        public TelemetryValue<float> TrackTemp { get { return new TelemetryValue<float>(sdk, "TrackTemp"); } }
+
+        public TelemetryValue<int> WeatherType { get { return new TelemetryValue<int>(sdk, "WeatherType"); } }
+
+        public TelemetryValue<float> WindDir { get { return new TelemetryValue<float>(sdk, "WindDir"); } }
+
+        public TelemetryValue<float> WindVel { get { return new TelemetryValue<float>(sdk, "WindVel"); } }
     }
 }

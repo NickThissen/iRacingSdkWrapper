@@ -43,12 +43,8 @@ namespace iRacingSimulator.Drivers
             // If we are not in the world (blinking?), stop checking
             if (_driver.Live.TrackSurface == TrackSurfaces.NotInWorld)
             {
-                //Debug.WriteLine("PIT: driver not in world, stopping.");
                 return;
             }
-
-
-            //Debug.WriteLine("PIT: tracksurface: " + _driver.Live.TrackSurface);
 
             // Are we NOW in pit lane (pitstall includes pitlane)
             this.InPitLane = _driver.Live.TrackSurface == TrackSurfaces.AproachingPits ||
@@ -63,13 +59,9 @@ namespace iRacingSimulator.Drivers
             // Were we already in pitlane previously?
             if (this.PitLaneEntryTime == null)
             {
-                //Debug.WriteLine("PIT: not previously in pitlane.");
-
                 // We were not previously in pitlane
                 if (this.InPitLane)
                 {
-                    //Debug.WriteLine("PIT: entered pitlane.");
-
                     // We have only just now entered pitlane
                     this.PitLaneEntryTime = time;
                     this.CurrentPitLaneTimeSeconds = 0;
@@ -79,18 +71,12 @@ namespace iRacingSimulator.Drivers
             }
             else
             {
-                //Debug.WriteLine("PIT: was already in pitlane.");
-
                 // We were already in pitlane but have not exited yet
                 this.CurrentPitLaneTimeSeconds = time - this.PitLaneEntryTime.Value;
-
-               // Debug.WriteLine("PIT: pit time: " + this.CurrentPitLaneTimeSeconds.ToString("0.0"));
-
+                
                 // Were we already in pit stall?
                 if (this.PitStallEntryTime == null)
                 {
-                    //Debug.WriteLine("PIT: not previously in pitstall.");
-
                     // We were not previously in our pit stall yet
                     if (this.InPitStall)
                     {
@@ -101,7 +87,6 @@ namespace iRacingSimulator.Drivers
                         else
                         {
                             // We have only just now entered our pit stall
-                            //Debug.WriteLine("PIT: entered pitstall.");
 
                             this.PitStallEntryTime = time;
                             this.CurrentPitStallTimeSeconds = 0;
@@ -110,17 +95,12 @@ namespace iRacingSimulator.Drivers
                 }
                 else
                 {
-                    //Debug.WriteLine("PIT: was already in pitstall.");
-
                     // We already were in our pit stall
                     this.CurrentPitStallTimeSeconds = time - this.PitStallEntryTime.Value;
-
-                    //Debug.WriteLine("PIT: pit stall time: " + this.CurrentPitStallTimeSeconds.ToString("0.0"));
-
+                    
                     if (!this.InPitStall)
                     {
                         // We have now left our pit stall
-                        //Debug.WriteLine("PIT: left pitstall.");
 
                         this.LastPitStallTimeSeconds = time - this.PitStallEntryTime.Value;
 
@@ -131,7 +111,6 @@ namespace iRacingSimulator.Drivers
                             var diff = this.PitStallExitTime.Value - time;
                             if (Math.Abs(diff) < 5)
                             {
-                                Debug.WriteLine("PIT: DUPLICATE PIT EXIT DETECTED.");
                                 // Sim detected pit stall exit again less than 5 seconds after previous exit.
                                 // This is not possible?
                                 return;
@@ -144,11 +123,6 @@ namespace iRacingSimulator.Drivers
                             // Now increment pitstop count
                             this.Pitstops += 1;
                             _hasIncrementedCounter = true;
-                            //Debug.WriteLine("---- INCREMENTING PITSTOP! New stops: " + this.Pitstops);
-                        }
-                        else
-                        {
-                            //Debug.WriteLine("!! Duplicate pit stop prevented");
                         }
                         
                         this.LastPitLap = _driver.Results.Current.LapsComplete;
