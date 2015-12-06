@@ -16,6 +16,7 @@ namespace iRacingSimulator
         public string Name { get; set; }
         public string CodeName { get; set; }
         public double Length { get; set; }
+        public bool NightMode { get; set; }
 
         public List<Sector> Sectors
         {
@@ -31,6 +32,7 @@ namespace iRacingSimulator
             track.Name = query["TrackDisplayName"].GetValue();
             track.CodeName = query["TrackName"].GetValue();
             track.Length = Parser.ParseTrackLength(query["TrackLength"].GetValue());
+            track.NightMode = query["WeekendOptions"]["NightMode"].GetValue() == "1";
 
             // Parse sectors
             track.Sectors.Clear();
