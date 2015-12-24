@@ -21,6 +21,11 @@ namespace iRacingSimulator
         public double TimeRemaining { get; set; }
         public int LeaderLap { get; set; }
 
+        public bool TrackCleanup { get; set; }
+        public bool DynamicTrack { get; set; }
+        public TrackUsageTypes TrackUsage { get; set; }
+        public string TrackUsageText { get; set; }
+
         public string RaceLaps { get; set; }
         public double RaceTime { get; set; }
 
@@ -34,13 +39,22 @@ namespace iRacingSimulator
         public void Update(SessionInfo info)
         {
             this.Track = Track.FromSessionInfo(info);
-            this.SubsessionId = Parser.ParseInt(info["WeekendInfo"]["SubSessionID"].GetValue());
+
+            var weekend = info["WeekendInfo"];
+            this.SubsessionId = Parser.ParseInt(weekend["SubSessionID"].GetValue());
 
             var session = info["SessionInfo"]["Sessions"]["SessionNum", Sim.Instance.CurrentSessionNumber];
             this.EventType = session["SessionType"].GetValue();
+
+            this.TrackUsageText = session["SessionTrackRubberState"].GetValue();
+            this.TrackUsage = TrackUsageFromString(this.TrackUsageText);
+
+            this.TrackCleanup = weekend["TrackCleanup"].GetValue() == "1";
+            this.DynamicTrack = weekend["TrackDynamicTrack"].GetValue() == "1";
+
             var laps = session["SessionLaps"].GetValue();
             var time = Parser.ParseSec(session["SessionTime"].GetValue());
-
+            
             this.RaceLaps = laps;
             this.RaceTime = time;
         }
@@ -79,6 +93,37 @@ namespace iRacingSimulator
                 return bestlap;
             }
             return null;
+        }
+
+        public TrackUsageTypes TrackUsageFromString(string usage)
+        {
+            switch (usage.ToLower().Trim())
+            {
+                case "clean": return TrackUsageTypes.Clean;
+                case "low usage": return TrackUsageTypes.Low;
+                case "slight usage": return TrackUsageTypes.Slight;
+                case "moderately low usage": return TrackUsageTypes.ModeratelyLow;
+                case "moderate usage": return TrackUsageTypes.Moderate;
+                case "moderately high usage": return TrackUsageTypes.ModeratelyHigh;
+                case "high usage": return TrackUsageTypes.High;
+                case "extensive usage": return TrackUsageTypes.Extensive;
+                case "maximum usage": return TrackUsageTypes.Maximum;
+            }
+            return TrackUsageTypes.Unknown;
+        }
+
+        public enum TrackUsageTypes
+        {
+            Unknown,
+            Clean,
+            Slight,
+            Low,
+            ModeratelyLow,
+            Moderate,
+            ModeratelyHigh,
+            High,
+            Extensive,
+            Maximum
         }
     }
 }

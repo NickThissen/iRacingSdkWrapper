@@ -115,6 +115,7 @@ namespace iRacingSimulator.Drivers
         public Laptime AverageTime { get; set; }
         public int LapsLed { get; set; }
         public int LapsComplete { get; set; }
+        public int LapsDriven { get; set; }
         
         public LaptimeCollection Laps { get; set; }
 
@@ -165,6 +166,7 @@ namespace iRacingSimulator.Drivers
 
             var previousLaps = this.LapsComplete;
             this.LapsComplete = Parser.ParseInt(query["LapsComplete"].GetValue());
+            this.LapsDriven = Parser.ParseInt(query["LapsDriven"].GetValue());
 
             this.FastestTime.LapNumber = this.FastestLap;
             this.LastTime.LapNumber = this.LapsComplete;

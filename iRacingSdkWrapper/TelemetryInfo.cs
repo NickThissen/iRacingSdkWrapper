@@ -95,10 +95,37 @@ namespace iRacingSdkWrapper
                                     this.TrackTemp,
                                     this.WeatherType,
                                     this.WindDir,
-                                    this.WindVel
+                                    this.WindVel,
+                                    this.MGUKDeployAdapt,
+                                    this.MGUKDeployFixed,
+                                    this.MGUKRegenGain,
+                                    this.EnergyBatteryToMGU,
+                                    this.EnergyBudgetBattToMGU,
+                                    this.EnergyERSBattery,
+                                    this.PowerMGUH,
+                                    this.PowerMGUK,
+                                    this.TorqueMGUK
                                 });
             return values;
         }
+
+        public TelemetryValue<float> MGUKDeployAdapt { get { return new TelemetryValue<float>(sdk, "dcMGUKDeployAdapt"); } }
+
+        public TelemetryValue<float> MGUKDeployFixed { get { return new TelemetryValue<float>(sdk, "dcMGUKDeployFixed"); } }
+
+        public TelemetryValue<float> MGUKRegenGain { get { return new TelemetryValue<float>(sdk, "dcMGUKRegenGain"); } }
+
+        public TelemetryValue<float> EnergyBatteryToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBatteryToMGU-KLap"); } }
+
+        public TelemetryValue<float> EnergyBudgetBattToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBudgetBattToMGU-KLap"); } }
+
+        public TelemetryValue<float> EnergyERSBattery { get { return new TelemetryValue<float>(sdk, "EnergyERSBattery"); } }
+
+        public TelemetryValue<float> PowerMGUH { get { return new TelemetryValue<float>(sdk, "PowerMGU-H"); } }
+
+        public TelemetryValue<float> PowerMGUK { get { return new TelemetryValue<float>(sdk, "PowerMGU-K"); } }
+
+        public TelemetryValue<float> TorqueMGUK { get { return new TelemetryValue<float>(sdk, "TorqueMGU-K"); } }
 
         /// <summary>
         /// Seconds since session start. Unit: s

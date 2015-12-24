@@ -481,6 +481,9 @@ namespace iRacingSimulator
 
         private void SdkOnDisconnected(object sender, EventArgs e)
         {
+            // If iRacing is closed with the SDK Wrapper active, things like track are not updated.
+            // To fix: simply restart the wrapper when iRacing closes so it starts listening for iRacing anew.
+            this.Start(this.Sdk.TelemetryUpdateFrequency);
             this.OnDisconnected();
         }
 
