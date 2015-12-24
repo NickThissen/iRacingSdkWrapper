@@ -205,7 +205,7 @@ namespace iRacingSimulator.Drivers
                         var sector = results.SectorTimes[prevNum];
                         if (sector != null && sector.EnterSessionTime > 0)
                         {
-                            sector.SectorTime = new Laptime(crossTime - sector.EnterSessionTime);
+                            sector.SectorTime = new Laptime((float)(crossTime - sector.EnterSessionTime));
                         }
 
                         // Begin next sector
@@ -231,7 +231,7 @@ namespace iRacingSimulator.Drivers
                         var sector = results.FakeSectorTimes[prevNum];
                         if (sector != null && sector.EnterSessionTime > 0)
                         {
-                            sector.SectorTime = new Laptime(crossTime - sector.EnterSessionTime);
+                            sector.SectorTime = new Laptime((float)(crossTime - sector.EnterSessionTime));
                         }
 
                         // Begin next sector

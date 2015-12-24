@@ -285,7 +285,6 @@ namespace iRacingSimulator
                 {
                     if (this.Leader == null) _leader = driver;
                     driver.Live.Position = driver.Results.Current.Position;
-                    //driver.Live.ClassPosition = driver.Results.Current.ClassPosition;
                 }
             }
 

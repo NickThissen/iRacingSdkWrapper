@@ -8,7 +8,10 @@ namespace iRacingSimulator
 {
     public class Laptime
     {
-        public Laptime() : this(0) { }
+        public Laptime() : this(0)
+        {
+            this.Time = TimeSpan.MaxValue;
+        }
 
         public Laptime(int value)
         {
@@ -29,7 +32,7 @@ namespace iRacingSimulator
         {
             get
             {
-                if (this.Value <= 0) return "-:--";
+                if (this.Value <= 0 || this.Time == TimeSpan.MaxValue) return "-:--";
                 if (this.Time.Minutes > 0)
                     return string.Format("{0:0}:{1:00}.{2:000}", this.Time.Minutes, this.Time.Seconds, this.Time.Milliseconds);
                 return string.Format("{0:00}.{1:000}", this.Time.Seconds, this.Time.Milliseconds);
