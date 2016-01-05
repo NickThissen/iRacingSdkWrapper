@@ -13,10 +13,10 @@ namespace iRacingSimulator
 {
     public class Sim
     {
-        private static Lazy<Sim> _instance = new Lazy<Sim>(() => new Sim());
+        private static Sim _instance;
         public static Sim Instance
         {
-            get { return _instance.Value; }
+            get { return _instance ?? (_instance = new Sim()); }
         }
 
         private TelemetryInfo _telemetry;
@@ -74,6 +74,7 @@ namespace iRacingSimulator
         public void Stop()
         {
             _sdk.Stop();
+            _instance = null;
         }
 
         #region Drivers

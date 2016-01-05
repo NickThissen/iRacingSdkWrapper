@@ -23,7 +23,7 @@ namespace iRacingSimulator
 
         public bool TrackCleanup { get; set; }
         public bool DynamicTrack { get; set; }
-        public TrackUsageTypes TrackUsage { get; set; }
+        public TrackConditions.TrackUsageTypes TrackUsage { get; set; }
         public string TrackUsageText { get; set; }
 
         public string RaceLaps { get; set; }
@@ -47,9 +47,12 @@ namespace iRacingSimulator
             this.EventType = session["SessionType"].GetValue();
 
             this.TrackUsageText = session["SessionTrackRubberState"].GetValue();
-            this.TrackUsage = TrackUsageFromString(this.TrackUsageText);
+            this.TrackUsage = TrackConditions.TrackUsageFromString(this.TrackUsageText);
 
-            this.TrackCleanup = weekend["TrackCleanup"].GetValue() == "1";
+            // NOTE: This value is bugged right now and should be interpreted in reverse.
+            // TrackCleanup = 0 means marbles are cleaned. TrackCleanup = 1 means marbles are left on track.
+            this.TrackCleanup = weekend["TrackCleanup"].GetValue() != "1"; 
+
             this.DynamicTrack = weekend["TrackDynamicTrack"].GetValue() == "1";
 
             var laps = session["SessionLaps"].GetValue();
@@ -95,35 +98,5 @@ namespace iRacingSimulator
             return null;
         }
 
-        public TrackUsageTypes TrackUsageFromString(string usage)
-        {
-            switch (usage.ToLower().Trim())
-            {
-                case "clean": return TrackUsageTypes.Clean;
-                case "low usage": return TrackUsageTypes.Low;
-                case "slight usage": return TrackUsageTypes.Slight;
-                case "moderately low usage": return TrackUsageTypes.ModeratelyLow;
-                case "moderate usage": return TrackUsageTypes.Moderate;
-                case "moderately high usage": return TrackUsageTypes.ModeratelyHigh;
-                case "high usage": return TrackUsageTypes.High;
-                case "extensive usage": return TrackUsageTypes.Extensive;
-                case "maximum usage": return TrackUsageTypes.Maximum;
-            }
-            return TrackUsageTypes.Unknown;
-        }
-
-        public enum TrackUsageTypes
-        {
-            Unknown,
-            Clean,
-            Slight,
-            Low,
-            ModeratelyLow,
-            Moderate,
-            ModeratelyHigh,
-            High,
-            Extensive,
-            Maximum
-        }
     }
 }

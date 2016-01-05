@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using iRacingSdkWrapper;
 
 namespace iRacingSimulator
@@ -43,7 +44,8 @@ namespace iRacingSimulator
             {
                 var pctString = query["SectorNum", nr]["SectorStartPct"].GetValue();
                 float pct;
-                if (string.IsNullOrWhiteSpace(pctString) || !float.TryParse(pctString, out pct))
+                if (string.IsNullOrWhiteSpace(pctString) || !float.TryParse(pctString, NumberStyles.AllowDecimalPoint, 
+                    CultureInfo.InvariantCulture, out pct))
                 {
                     break;
                 }

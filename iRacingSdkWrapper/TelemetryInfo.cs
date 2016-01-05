@@ -93,6 +93,7 @@ namespace iRacingSdkWrapper
                                     this.FogLevel,
                                     this.Skies,
                                     this.TrackTemp,
+                                    this.RelativeHumidity,
                                     this.WeatherType,
                                     this.WindDir,
                                     this.WindVel,
@@ -511,6 +512,8 @@ namespace iRacingSdkWrapper
         public TelemetryValue<int> Skies { get { return new TelemetryValue<int>(sdk, "Skies"); } }
 
         public TelemetryValue<float> TrackTemp { get { return new TelemetryValue<float>(sdk, "TrackTemp"); } }
+
+        public TelemetryValue<float> RelativeHumidity { get { return new TelemetryValue<float>(sdk, "RelativeHumidity"); } }
 
         public TelemetryValue<int> WeatherType { get { return new TelemetryValue<int>(sdk, "WeatherType"); } }
 
