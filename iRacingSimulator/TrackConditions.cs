@@ -20,7 +20,7 @@ namespace iRacingSimulator
         public static readonly float DefaultWindDir = 0;
         public static readonly float DefaultWindVel = WindToMph(0.894f); //mph
         public static readonly int DefaultTrackUsage = (int)TrackUsageTypes.ModeratelyLow;
-        public static readonly bool DefaultMarbleCleanup = true;
+        public static readonly bool DefaultMarbleCleanup = false;
 
         /// <summary>
         /// Converts temperature from degrees Celsius to Fahrenheit
