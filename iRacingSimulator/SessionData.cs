@@ -48,11 +48,8 @@ namespace iRacingSimulator
 
             this.TrackUsageText = session["SessionTrackRubberState"].GetValue();
             this.TrackUsage = TrackConditions.TrackUsageFromString(this.TrackUsageText);
-
-            // NOTE: This value is bugged right now and should be interpreted in reverse.
-            // TrackCleanup = 0 means marbles are cleaned. TrackCleanup = 1 means marbles are left on track.
-            this.TrackCleanup = weekend["TrackCleanup"].GetValue() != "1"; 
-
+            
+            this.TrackCleanup = weekend["TrackCleanup"].GetValue() == "1"; 
             this.DynamicTrack = weekend["TrackDynamicTrack"].GetValue() == "1";
 
             var laps = session["SessionLaps"].GetValue();
