@@ -11,20 +11,23 @@ namespace iRacingSimulator
         public const float Tolerance = 0.1f;
         public static readonly int DefaultWeatherType = 0;
         public static readonly float DefaultAirDensity = 1.207f;
-        public static readonly float DefaultAirPressure = 29.34f;
-        public static readonly float DefaultAirTemp = TempToF(25.556f);
+        public static readonly float DefaultAirPressure = 29.34f; 
+        public static readonly float DefaultAirTemp = 25.556f; // C
         public static readonly int DefaultFogLevel = 0;
         public static readonly float DefaultHumidity = 0.55f;
         public static readonly int DefaultSkies = 1;
-        public static readonly float DefaultTrackTemp = TempToF(39.8f); //F
+        public static readonly float DefaultTrackTemp = 39.8f; // C
         public static readonly float DefaultWindDir = 0;
-        public static readonly float DefaultWindVel = WindToMph(0.894f); //mph
+        public static readonly float DefaultWindVel = 0.894f; // m/s
         public static readonly int DefaultTrackUsage = (int)TrackUsageTypes.ModeratelyLow;
         public static readonly bool DefaultMarbleCleanup = false;
 
-        public static readonly int MinTemperature = 65; // F
-        public static readonly int MaxTemperature = 90; // F
-        public static readonly int MaxWindSpeed = 30; // mph
+        public static readonly int MinTemperatureF = 65; // F
+        public static readonly int MaxTemperatureF = 90; // F
+        public static readonly int MaxWindSpeedMph = 30; // mph
+        public static readonly int MinTemperatureC = (int) TempToC(MinTemperatureF);
+        public static readonly int MaxTemperatureC = (int) TempToC(MaxTemperatureF);
+        public static readonly int MaxWindSpeedKph = (int) WindToKph(MaxWindSpeedMph);
 
         /// <summary>
         /// Converts temperature from degrees Celsius to Fahrenheit
@@ -53,7 +56,17 @@ namespace iRacingSimulator
         /// <returns></returns>
         public static float WindToMph(float windMps)
         {
-            return windMps * 3.6f * 0.6213712f;
+            return WindToMphFromKph(windMps * 3.6f);
+        }
+
+        /// <summary>
+        /// Converts wind speed from kilometers/hour to miles/hour.
+        /// </summary>
+        /// <param name="wind">Wind speed in kilometers/hour</param>
+        /// <returns></returns>
+        public static float WindToMphFromKph(float windKph)
+        {
+            return windKph* 0.6213712f;
         }
 
         /// <summary>

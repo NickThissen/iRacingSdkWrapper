@@ -105,7 +105,8 @@ namespace iRacingSdkWrapper
                                     this.EnergyERSBattery,
                                     this.PowerMGUH,
                                     this.PowerMGUK,
-                                    this.TorqueMGUK
+                                    this.TorqueMGUK,
+                                    this.DrsStatus
                                 });
             return values;
         }
@@ -116,17 +117,19 @@ namespace iRacingSdkWrapper
 
         public TelemetryValue<float> MGUKRegenGain { get { return new TelemetryValue<float>(sdk, "dcMGUKRegenGain"); } }
 
-        public TelemetryValue<float> EnergyBatteryToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBatteryToMGU-KLap"); } }
+        public TelemetryValue<float> EnergyBatteryToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBatteryToMGU_KLap"); } }
 
-        public TelemetryValue<float> EnergyBudgetBattToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBudgetBattToMGU-KLap"); } }
+        public TelemetryValue<float> EnergyBudgetBattToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBudgetBattToMGU_KLap"); } }
 
         public TelemetryValue<float> EnergyERSBattery { get { return new TelemetryValue<float>(sdk, "EnergyERSBattery"); } }
 
-        public TelemetryValue<float> PowerMGUH { get { return new TelemetryValue<float>(sdk, "PowerMGU-H"); } }
+        public TelemetryValue<float> PowerMGUH { get { return new TelemetryValue<float>(sdk, "PowerMGU_H"); } }
 
-        public TelemetryValue<float> PowerMGUK { get { return new TelemetryValue<float>(sdk, "PowerMGU-K"); } }
+        public TelemetryValue<float> PowerMGUK { get { return new TelemetryValue<float>(sdk, "PowerMGU_K"); } }
 
-        public TelemetryValue<float> TorqueMGUK { get { return new TelemetryValue<float>(sdk, "TorqueMGU-K"); } }
+        public TelemetryValue<float> TorqueMGUK { get { return new TelemetryValue<float>(sdk, "TorqueMGU_K"); } }
+
+        public TelemetryValue<int> DrsStatus { get { return new TelemetryValue<int>(sdk, "DRS_Status"); } }
 
         /// <summary>
         /// Seconds since session start. Unit: s
