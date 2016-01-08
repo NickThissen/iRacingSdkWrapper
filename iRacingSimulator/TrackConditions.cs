@@ -22,6 +22,10 @@ namespace iRacingSimulator
         public static readonly int DefaultTrackUsage = (int)TrackUsageTypes.ModeratelyLow;
         public static readonly bool DefaultMarbleCleanup = false;
 
+        public static readonly int MinTemperature = 65; // F
+        public static readonly int MaxTemperature = 90; // F
+        public static readonly int MaxWindSpeed = 30; // mph
+
         /// <summary>
         /// Converts temperature from degrees Celsius to Fahrenheit
         /// </summary>
@@ -33,13 +37,33 @@ namespace iRacingSimulator
         }
 
         /// <summary>
+        /// Converts temperature from Fahrenheit to degrees Celsius
+        /// </summary>
+        /// <param name="tempF">Temperature in Fahrenheit</param>
+        /// <returns></returns>
+        public static float TempToC(float tempF)
+        {
+            return (tempF - 32)/1.8f;
+        }
+
+        /// <summary>
         /// Converts wind speed from meters/second to miles/hour.
         /// </summary>
         /// <param name="wind">Wind speed in meters/second</param>
         /// <returns></returns>
-        public static float WindToMph(float wind)
+        public static float WindToMph(float windMps)
         {
-            return wind * 3.6f * 0.6213712f;
+            return windMps * 3.6f * 0.6213712f;
+        }
+
+        /// <summary>
+        /// Converts wind speed from miles/hour to kilometers/hour.
+        /// </summary>
+        /// <param name="windMph">Wind speed in miles/hour</param>
+        /// <returns></returns>
+        public static float WindToKph(float windMph)
+        {
+            return windMph / 0.6213712f;
         }
 
         private static double WrapWindDir(double degrees)
@@ -50,7 +74,7 @@ namespace iRacingSimulator
         }
 
         /// <summary>
-        /// Converts wind direction in radians to degrees, optionally rounding to nearest "45-degree" cardinal direction (e.g. N, NE, E, SE, etc).
+        /// Converts wind direction from radians to degrees, optionally rounding to nearest "45-degree" cardinal direction (e.g. N, NE, E, SE, etc).
         /// </summary>
         /// <param name="dirRadians">Direction in radians</param>
         /// <param name="rounded">If true, rounds to nearest "45-degree" cardinal direction</param>
@@ -62,7 +86,18 @@ namespace iRacingSimulator
                 return (int) Math.Round(degrees/45f)*45f;
             return (float)degrees;
         }
-        
+
+        /// <summary>
+        /// Converts wind direction from degrees to radians.
+        /// </summary>
+        /// <param name="dirDegrees">Direction in degrees (0 - 360)</param>
+        /// <returns></returns>
+        public static float WindDirToRadians(float dirDegrees)
+        {
+            var degrees = WrapWindDir(dirDegrees);
+            return (float) (degrees*Math.PI/180f);
+        }
+
         /// <summary>
         /// Converts wind direction in radians to the name of the corresponding cardinal direction (e.g. N, NE, E, SE, etc).
         /// </summary>
