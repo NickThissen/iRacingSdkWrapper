@@ -30,6 +30,7 @@ namespace iRacingSdkWrapper
                                     this.IsReplayPlaying,
                                     this.ReplayFrameNum,
                                     this.CarIdxLap,
+                                    this.CarIdxLapCompleted,
                                     this.CarIdxLapDistPct,
                                     this.CarIdxTrackSurface,
                                     this.CarIdxSteer,
@@ -106,7 +107,8 @@ namespace iRacingSdkWrapper
                                     this.PowerMGUH,
                                     this.PowerMGUK,
                                     this.TorqueMGUK,
-                                    this.DrsStatus
+                                    this.DrsStatus,
+                                    this.LapCompleted
                                 });
             return values;
         }
@@ -129,7 +131,16 @@ namespace iRacingSdkWrapper
 
         public TelemetryValue<float> TorqueMGUK { get { return new TelemetryValue<float>(sdk, "TorqueMGU_K"); } }
 
+        /// <summary>
+        /// Current DRS status. 0 = inactive, 1 = can be activated in next DRS zone, 2 = can be activated now, 3 = active.
+        /// </summary>
         public TelemetryValue<int> DrsStatus { get { return new TelemetryValue<int>(sdk, "DRS_Status"); } }
+
+        /// <summary>
+        /// The number of laps you have completed. Note: on Nordschleife Tourist layout, you can complete a lap without starting a new one!
+        /// </summary>
+        public TelemetryValue<int> LapCompleted { get { return new TelemetryValue<int>(sdk, "LapCompleted"); } }
+
 
         /// <summary>
         /// Seconds since session start. Unit: s
@@ -180,10 +191,14 @@ namespace iRacingSdkWrapper
 
 
         /// <summary>
-        /// Lap count by car index. 
+        /// Current lap number by car index
         /// </summary>
         public TelemetryValue<int[]> CarIdxLap { get { return new TelemetryValue<int[]>(sdk, "CarIdxLap"); } }
 
+        /// <summary>
+        /// Current number of completed laps by car index. Note: On Nordschleife Tourist layout, cars can complete a lap without starting a new lap!
+        /// </summary>
+        public TelemetryValue<int[]> CarIdxLapCompleted { get { return new TelemetryValue<int[]>(sdk, "CarIdxLapCompleted"); } }
 
         /// <summary>
         /// Percentage distance around lap by car index. Unit: %
