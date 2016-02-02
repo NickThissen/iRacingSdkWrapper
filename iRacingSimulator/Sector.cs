@@ -6,13 +6,35 @@ using System.Threading.Tasks;
 
 namespace iRacingSimulator
 {
-    public class Sector
+    public class Sector : NotifyPropertyChanged
     {
+        private double _enterSessionTime;
+        private Laptime _sectorTime;
+
         public int Number { get; set; }
         public float StartPercentage { get; set; }
 
-        public double EnterSessionTime { get; set; }
-        public Laptime SectorTime { get; set; }
+        public double EnterSessionTime
+        {
+            get { return _enterSessionTime; }
+            set
+            {
+                if (value.Equals(_enterSessionTime)) return;
+                _enterSessionTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Laptime SectorTime
+        {
+            get { return _sectorTime; }
+            set
+            {
+                if (Equals(value, _sectorTime)) return;
+                _sectorTime = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Sector Copy()
         {

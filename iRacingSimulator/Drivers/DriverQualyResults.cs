@@ -7,7 +7,7 @@ using iRacingSdkWrapper;
 
 namespace iRacingSimulator.Drivers
 {
-    public class DriverQualyResults
+    public class DriverQualyResults : NotifyPropertyChanged
     {
         public DriverQualyResults(Driver driver)
         {
@@ -15,14 +15,47 @@ namespace iRacingSimulator.Drivers
         }
 
         private readonly Driver _driver;
+        private int _position;
+        private int _classPosition;
+        private Laptime _lap;
+
         /// <summary>
         /// Gets the driver object.
         /// </summary>
         public Driver Driver { get { return _driver; } }
 
-        public int Position { get; set; }
-        public int ClassPosition { get; set; }
-        public Laptime Lap { get; set; }
+        public int Position
+        {
+            get { return _position; }
+            set
+            {
+                if (value == _position) return;
+                _position = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int ClassPosition
+        {
+            get { return _classPosition; }
+            set
+            {
+                if (value == _classPosition) return;
+                _classPosition = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Laptime Lap
+        {
+            get { return _lap; }
+            set
+            {
+                if (Equals(value, _lap)) return;
+                _lap = value;
+                OnPropertyChanged();
+            }
+        }
 
         internal void ParseYaml(YamlQuery query, int position)
         {

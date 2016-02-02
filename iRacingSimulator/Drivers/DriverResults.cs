@@ -77,7 +77,7 @@ namespace iRacingSimulator.Drivers
     /// Represents the session results for a single driver in a single session.
     /// </summary>
     [Serializable]
-    public class DriverSessionResults
+    public class DriverSessionResults : NotifyPropertyChanged
     {
         public DriverSessionResults(Driver driver, int sessionNumber)
         {
@@ -99,28 +99,183 @@ namespace iRacingSimulator.Drivers
         public Driver Driver { get { return _driver; } }
 
         private readonly int _sessionNumber;
+        private int _position;
+        private int _classPosition;
+        private int _lap;
+        private Laptime _time;
+        private int _fastestLap;
+        private Laptime _fastestTime;
+        private Laptime _lastTime;
+        private Laptime _averageTime;
+        private int _lapsLed;
+        private int _lapsComplete;
+        private int _lapsDriven;
+        private LaptimeCollection _laps;
+        private Sector[] _sectorTimes;
+        private Sector[] _fakeSectorTimes;
+        private string _outReason;
+        private int _outReasonId;
         public int SessionNumber { get { return _sessionNumber; } }
 
         public bool IsEmpty { get; set; }
 
-        public int Position { get; set; }
-        public int ClassPosition { get; set; }
+        public int Position
+        {
+            get { return _position; }
+            set
+            {
+                if (value == _position) return;
+                _position = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public int Lap { get; set; }
-        public Laptime Time { get; set; }
+        public int ClassPosition
+        {
+            get { return _classPosition; }
+            set
+            {
+                if (value == _classPosition) return;
+                _classPosition = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public int FastestLap { get; set; }
-        public Laptime FastestTime { get; set; }
-        public Laptime LastTime { get; set; }
-        public Laptime AverageTime { get; set; }
-        public int LapsLed { get; set; }
-        public int LapsComplete { get; set; }
-        public int LapsDriven { get; set; }
-        
-        public LaptimeCollection Laps { get; set; }
+        public int Lap
+        {
+            get { return _lap; }
+            set
+            {
+                if (value == _lap) return;
+                _lap = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public Sector[] SectorTimes { get; set; }
-        public Sector[] FakeSectorTimes { get; set; }
+        public Laptime Time
+        {
+            get { return _time; }
+            set
+            {
+                if (Equals(value, _time)) return;
+                _time = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int FastestLap
+        {
+            get { return _fastestLap; }
+            set
+            {
+                if (value == _fastestLap) return;
+                _fastestLap = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Laptime FastestTime
+        {
+            get { return _fastestTime; }
+            set
+            {
+                if (Equals(value, _fastestTime)) return;
+                _fastestTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Laptime LastTime
+        {
+            get { return _lastTime; }
+            set
+            {
+                if (Equals(value, _lastTime)) return;
+                _lastTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Laptime AverageTime
+        {
+            get { return _averageTime; }
+            set
+            {
+                if (Equals(value, _averageTime)) return;
+                _averageTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int LapsLed
+        {
+            get { return _lapsLed; }
+            set
+            {
+                if (value == _lapsLed) return;
+                _lapsLed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int LapsComplete
+        {
+            get { return _lapsComplete; }
+            set
+            {
+                if (value == _lapsComplete) return;
+                _lapsComplete = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int LapsDriven
+        {
+            get { return _lapsDriven; }
+            set
+            {
+                if (value == _lapsDriven) return;
+                _lapsDriven = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public LaptimeCollection Laps
+        {
+            get { return _laps; }
+            set
+            {
+                if (Equals(value, _laps)) return;
+                _laps = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Sector[] SectorTimes
+        {
+            get { return _sectorTimes; }
+            set
+            {
+                if (Equals(value, _sectorTimes)) return;
+                _sectorTimes = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SectorsDisplay));
+            }
+        }
+
+        public Sector[] FakeSectorTimes
+        {
+            get { return _fakeSectorTimes; }
+            set
+            {
+                if (Equals(value, _fakeSectorTimes)) return;
+                _fakeSectorTimes = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(FakeSector1));
+                OnPropertyChanged(nameof(FakeSector2));
+                OnPropertyChanged(nameof(FakeSector3));
+            }
+        }
 
         public string SectorsDisplay
         {
@@ -146,8 +301,29 @@ namespace iRacingSimulator.Drivers
             get { return FakeSectorTimes == null || FakeSectorTimes.Length == 0 ? null : FakeSectorTimes[2]; }
         }
 
-        public string OutReason { get; set; }
-        public int OutReasonId { get; set; }
+        public string OutReason
+        {
+            get { return _outReason; }
+            set
+            {
+                if (value == _outReason) return;
+                _outReason = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int OutReasonId
+        {
+            get { return _outReasonId; }
+            set
+            {
+                if (value == _outReasonId) return;
+                _outReasonId = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsOut));
+            }
+        }
+
         public bool IsOut { get { return this.OutReasonId != 0; } }
 
         internal void ParseYaml(YamlQuery query, int position)

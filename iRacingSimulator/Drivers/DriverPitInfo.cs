@@ -6,7 +6,7 @@ using iRacingSimulator.Events;
 namespace iRacingSimulator.Drivers
 {
     [Serializable]
-    public class DriverPitInfo
+    public class DriverPitInfo : NotifyPropertyChanged
     {
         private const float PIT_MINSPEED = 0.01f;
 
@@ -17,26 +17,162 @@ namespace iRacingSimulator.Drivers
 
         private readonly Driver _driver;
         private bool _hasIncrementedCounter;
+        private int _pitstops;
+        private bool _inPitLane;
+        private bool _inPitStall;
+        private double? _pitLaneEntryTime;
+        private double? _pitLaneExitTime;
+        private double? _pitStallEntryTime;
+        private double? _pitStallExitTime;
+        private double _lastPitLaneTimeSeconds;
+        private double _lastPitStallTimeSeconds;
+        private double _currentPitLaneTimeSeconds;
+        private double _currentPitStallTimeSeconds;
+        private int _lastPitLap;
+        private int _currentStint;
 
-        public int Pitstops { get; set; }
+        public int Pitstops
+        {
+            get { return _pitstops; }
+            set
+            {
+                if (value == _pitstops) return;
+                _pitstops = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public bool InPitLane { get; set; }
-        public bool InPitStall { get; set; }
+        public bool InPitLane
+        {
+            get { return _inPitLane; }
+            set
+            {
+                if (value == _inPitLane) return;
+                _inPitLane = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public double? PitLaneEntryTime { get; set; }
-        public double? PitLaneExitTime { get; set; }
+        public bool InPitStall
+        {
+            get { return _inPitStall; }
+            set
+            {
+                if (value == _inPitStall) return;
+                _inPitStall = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public double? PitStallEntryTime { get; set; }
-        public double? PitStallExitTime { get; set; }
+        public double? PitLaneEntryTime
+        {
+            get { return _pitLaneEntryTime; }
+            set
+            {
+                if (value.Equals(_pitLaneEntryTime)) return;
+                _pitLaneEntryTime = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public double LastPitLaneTimeSeconds { get; set; }
-        public double LastPitStallTimeSeconds { get; set; }
+        public double? PitLaneExitTime
+        {
+            get { return _pitLaneExitTime; }
+            set
+            {
+                if (value.Equals(_pitLaneExitTime)) return;
+                _pitLaneExitTime = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public double CurrentPitLaneTimeSeconds { get; set; }
-        public double CurrentPitStallTimeSeconds { get; set; }
+        public double? PitStallEntryTime
+        {
+            get { return _pitStallEntryTime; }
+            set
+            {
+                if (value.Equals(_pitStallEntryTime)) return;
+                _pitStallEntryTime = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public int LastPitLap { get; set; }
-        public int CurrentStint { get; set; }
+        public double? PitStallExitTime
+        {
+            get { return _pitStallExitTime; }
+            set
+            {
+                if (value.Equals(_pitStallExitTime)) return;
+                _pitStallExitTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double LastPitLaneTimeSeconds
+        {
+            get { return _lastPitLaneTimeSeconds; }
+            set
+            {
+                if (value.Equals(_lastPitLaneTimeSeconds)) return;
+                _lastPitLaneTimeSeconds = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double LastPitStallTimeSeconds
+        {
+            get { return _lastPitStallTimeSeconds; }
+            set
+            {
+                if (value.Equals(_lastPitStallTimeSeconds)) return;
+                _lastPitStallTimeSeconds = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double CurrentPitLaneTimeSeconds
+        {
+            get { return _currentPitLaneTimeSeconds; }
+            set
+            {
+                if (value.Equals(_currentPitLaneTimeSeconds)) return;
+                _currentPitLaneTimeSeconds = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double CurrentPitStallTimeSeconds
+        {
+            get { return _currentPitStallTimeSeconds; }
+            set
+            {
+                if (value.Equals(_currentPitStallTimeSeconds)) return;
+                _currentPitStallTimeSeconds = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int LastPitLap
+        {
+            get { return _lastPitLap; }
+            set
+            {
+                if (value == _lastPitLap) return;
+                _lastPitLap = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int CurrentStint
+        {
+            get { return _currentStint; }
+            set
+            {
+                if (value == _currentStint) return;
+                _currentStint = value;
+                OnPropertyChanged();
+            }
+        }
 
         public void CalculatePitInfo(double time)
         {

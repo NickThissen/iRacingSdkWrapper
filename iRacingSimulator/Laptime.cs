@@ -6,8 +6,12 @@ using iRacingSimulator.Drivers;
 
 namespace iRacingSimulator
 {
-    public class Laptime
+    public class Laptime : NotifyPropertyChanged
     {
+        private int _value;
+        private TimeSpan _time;
+        private int _lapNumber;
+
         public Laptime() : this(0)
         {
             this.Time = TimeSpan.MaxValue;
@@ -24,9 +28,42 @@ namespace iRacingSimulator
         {
         }
 
-        public int Value { get; set; }
-        public TimeSpan Time { get; set; }
-        public int LapNumber { get; set; }
+        public int Value
+        {
+            get { return _value; }
+            set
+            {
+                if (value == _value) return;
+                _value = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Display));
+                OnPropertyChanged(nameof(DisplayShort));
+            }
+        }
+
+        public TimeSpan Time
+        {
+            get { return _time; }
+            set
+            {
+                if (value.Equals(_time)) return;
+                _time = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Display));
+                OnPropertyChanged(nameof(DisplayShort));
+            }
+        }
+
+        public int LapNumber
+        {
+            get { return _lapNumber; }
+            set
+            {
+                if (value == _lapNumber) return;
+                _lapNumber = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string Display
         {

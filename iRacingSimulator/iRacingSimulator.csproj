@@ -51,7 +51,9 @@
     <Compile Include="Drivers\License.cs" />
     <Compile Include="Events\RaceEvent.cs" />
     <Compile Include="Laptime.cs" />
+    <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="SessionData.cs" />
     <Compile Include="Sim.cs" />

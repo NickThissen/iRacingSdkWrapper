@@ -6,7 +6,7 @@ using iRacingSdkWrapper;
 namespace iRacingSimulator.Drivers
 {
     [Serializable]
-    public partial class Driver
+    public partial class Driver : NotifyPropertyChanged
     {
         private const string PACECAR_NAME = "safety pcfr500s";
 
@@ -24,38 +24,186 @@ namespace iRacingSimulator.Drivers
         /// <summary>
         /// If true, this is your driver on track.
         /// </summary>
-        public bool IsCurrentDriver { get; set; }
+        public bool IsCurrentDriver
+        {
+            get { return _isCurrentDriver; }
+            set
+            {
+                if (value == _isCurrentDriver) return;
+                _isCurrentDriver = value;
+                OnPropertyChanged();
+            }
+        }
 
         public int Id { get; set; }
-        public int CustId { get; set; }
-        public string Name { get; set; }
-        public string ShortName { get; set; }
+
+        public int CustId
+        {
+            get { return _custId; }
+            set
+            {
+                if (value == _custId) return;
+                _custId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (value == _name) return;
+                _name = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(LongDisplay));
+            }
+        }
+
+        public string ShortName
+        {
+            get { return _shortName; }
+            set
+            {
+                if (value == _shortName) return;
+                _shortName = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string CarNumber { get { return this.Car.CarNumber; } }
 
         public int TeamId { get; set; }
         public string TeamName { get; set; }
 
-        public int IRating { get; set; }
-        public License License { get; set; }
+        public int IRating
+        {
+            get { return _rating; }
+            set
+            {
+                if (value == _rating) return;
+                _rating = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public bool IsSpectator { get; set; }
+        public License License
+        {
+            get { return _license; }
+            set
+            {
+                if (Equals(value, _license)) return;
+                _license = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSpectator
+        {
+            get { return _isSpectator; }
+            set
+            {
+                if (value == _isSpectator) return;
+                _isSpectator = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsPacecar { get; set; }
 
-        public string HelmetDesign { get; set; }
-        public string CarDesign { get; set; }
-        public string SuitDesign { get; set; }
-        public string CarNumberDesign { get; set; }
-        public string CarSponsor1 { get; set; }
-        public string CarSponsor2 { get; set; }
+        public string HelmetDesign
+        {
+            get { return _helmetDesign; }
+            set
+            {
+                if (value == _helmetDesign) return;
+                _helmetDesign = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string ClubName { get; set; }
-        public string DivisionName { get; set; }
+        public string CarDesign
+        {
+            get { return _carDesign; }
+            set
+            {
+                if (value == _carDesign) return;
+                _carDesign = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public DriverCarInfo Car { get; set; }
-        public DriverPitInfo PitInfo { get; set; }
+        public string SuitDesign
+        {
+            get { return _suitDesign; }
+            set
+            {
+                if (value == _suitDesign) return;
+                _suitDesign = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CarNumberDesign
+        {
+            get { return _carNumberDesign; }
+            set
+            {
+                if (value == _carNumberDesign) return;
+                _carNumberDesign = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CarSponsor1
+        {
+            get { return _carSponsor1; }
+            set
+            {
+                if (value == _carSponsor1) return;
+                _carSponsor1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CarSponsor2
+        {
+            get { return _carSponsor2; }
+            set
+            {
+                if (value == _carSponsor2) return;
+                _carSponsor2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ClubName
+        {
+            get { return _clubName; }
+            set
+            {
+                if (value == _clubName) return;
+                _clubName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string DivisionName
+        {
+            get { return _divisionName; }
+            set
+            {
+                if (value == _divisionName) return;
+                _divisionName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DriverCarInfo Car { get; private set; }
+        public DriverPitInfo PitInfo { get; private set; }
         public DriverResults Results { get; private set; }
-        public DriverSessionResults CurrentResults { get; set; }
-        public DriverQualyResults QualyResults { get; set; }
+        public DriverSessionResults CurrentResults { get; private set; }
+        public DriverQualyResults QualyResults { get; private set; }
         public DriverLiveInfo Live { get; private set; }
         public DriverChampInfo Championship { get; private set; }
         public DriverPrivateInfo Private { get; private set; }
@@ -155,6 +303,21 @@ namespace iRacingSimulator.Drivers
         }
 
         private double _prevPos;
+        private bool _isCurrentDriver;
+        private string _name;
+        private int _custId;
+        private string _shortName;
+        private int _rating;
+        private License _license;
+        private bool _isSpectator;
+        private string _helmetDesign;
+        private string _carDesign;
+        private string _suitDesign;
+        private string _carNumberDesign;
+        private string _carSponsor1;
+        private string _carSponsor2;
+        private string _clubName;
+        private string _divisionName;
 
         public void UpdateSectorTimes(Track track, TelemetryInfo telemetry)
         {
