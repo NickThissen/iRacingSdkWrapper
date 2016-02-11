@@ -28,14 +28,32 @@ namespace iRacingSimulator
         public TimeSpan Time { get; set; }
         public int LapNumber { get; set; }
 
+        /// <summary>
+        /// Formats a positive laptime in mm:sss.fff format. Use 'DiffDisplay' for displaying negative (differences in) laptimes.
+        /// </summary>
         public string Display
         {
             get
             {
                 if (this.Value <= 0 || this.Time == TimeSpan.MaxValue) return "-:--";
+                return DiffDisplay;
+            }
+        }
+
+        /// <summary>
+        /// Formats a (difference in) laptimes in mm:sss.fff format. Works for negative laptimes too.
+        /// </summary>
+        public string DiffDisplay
+        {
+            get
+            {
+                bool isNeg = this.Value < 0;
+                var time = this.Time;
+                if (isNeg) time = this.Time.Negate();
+
                 if (this.Time.Minutes > 0)
-                    return string.Format("{0:0}:{1:00}.{2:000}", this.Time.Minutes, this.Time.Seconds, this.Time.Milliseconds);
-                return string.Format("{0:00}.{1:000}", this.Time.Seconds, this.Time.Milliseconds);
+                    return string.Format("{0}{1:0}:{2:00}.{3:000}", isNeg ? "-": "", time.Minutes, time.Seconds, time.Milliseconds);
+                return string.Format("{0}{1:00}.{2:000}", isNeg ? "-" : "", time.Seconds, time.Milliseconds);
             }
         }
 

@@ -17,28 +17,35 @@ namespace iRacingSdkWrapper
 
 
             var header = sdk.VarHeaders[name];
-            _Name = name;
-            _Description = header.Desc;
-            _Unit = header.Unit;
+            _name = name;
+            _description = header.Desc;
+            _unit = header.Unit;
+            _type = header.Type;
         }
 
-        private readonly string _Name;
+        private readonly string _name;
         /// <summary>
         /// The name of this telemetry value parameter.
         /// </summary>
-        public string Name { get { return _Name; } }
+        public string Name { get { return _name; } }
 
-        private readonly string _Description;
+        private readonly string _description;
         /// <summary>
         /// The description of this parameter.
         /// </summary>
-        public string Description { get { return _Description; } }
+        public string Description { get { return _description; } }
 
-        private readonly string _Unit;
+        private readonly string _unit;
         /// <summary>
         /// The real world unit for this parameter.
         /// </summary>
-        public string Unit { get { return _Unit; } }
+        public string Unit { get { return _unit; } }
+
+        private readonly CVarHeader.VarType _type;
+        /// <summary>
+        /// The data-type for this parameter.
+        /// </summary>
+        public CVarHeader.VarType Type { get { return _type; } }
 
         public abstract object GetValue();
     }
