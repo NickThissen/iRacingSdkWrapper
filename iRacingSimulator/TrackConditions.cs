@@ -20,7 +20,7 @@ namespace iRacingSimulator
         public static readonly float DefaultWindDir = 0;
         public static readonly float DefaultWindVel = 0.894f; // m/s
         public static readonly int DefaultTrackUsage = (int)TrackUsageTypes.ModeratelyLow;
-        public static readonly bool DefaultMarbleCleanup = false;
+        public static readonly bool DefaultMarbleCleanup = true;
 
         public static readonly int MinTemperatureF = 65; // F
         public static readonly int MaxTemperatureF = 90; // F
