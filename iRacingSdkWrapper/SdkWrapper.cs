@@ -20,6 +20,7 @@ namespace iRacingSdkWrapper
         private int waitTime;
         private Mutex readMutex;
 
+        private Thread _looper;
         private bool _hasConnected;
 
         #endregion
@@ -152,8 +153,13 @@ namespace iRacingSdkWrapper
         {
             _IsRunning = true;
 
-            Thread t = new Thread(Loop);
-            t.Start();
+            if (_looper != null)
+            {
+                _looper.Abort();
+            }
+
+            _looper = new Thread(Loop);
+            _looper.Start();
         }
 
         /// <summary>

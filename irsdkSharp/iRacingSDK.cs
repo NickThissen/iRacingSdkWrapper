@@ -69,6 +69,8 @@ namespace iRSDKSharp
 
         public bool Startup()
         {
+            if (IsInitialized) return true;
+
             try
             {
                 iRacingFile = MemoryMappedFile.OpenExisting(Defines.MemMapFileName);
