@@ -15,6 +15,7 @@ namespace iRacingSimulator
 
         public Track Track { get; set; }
         public string EventType { get; set; }
+        public string SessionType { get; set; }
         public int SubsessionId { get; set; }
 
         public double SessionTime { get; set; }
@@ -42,9 +43,10 @@ namespace iRacingSimulator
 
             var weekend = info["WeekendInfo"];
             this.SubsessionId = Parser.ParseInt(weekend["SubSessionID"].GetValue());
+            this.EventType = weekend["EventType"].GetValue();
 
             var session = info["SessionInfo"]["Sessions"]["SessionNum", Sim.Instance.CurrentSessionNumber];
-            this.EventType = session["SessionType"].GetValue();
+            this.SessionType = session["SessionType"].GetValue();
 
             this.TrackUsageText = session["SessionTrackRubberState"].GetValue();
             this.TrackUsage = TrackConditions.TrackUsageFromString(this.TrackUsageText);
