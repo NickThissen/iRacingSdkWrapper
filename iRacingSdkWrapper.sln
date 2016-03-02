@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSdkWrapper.Examples.BroadcastMessages", "Samples\iRacingSdkWrapper.Examples.BroadcastMessages\iRacingSdkWrapper.Examples.BroadcastMessages.csproj", "{426199FD-4CB6-4AB8-8B42-053368F49416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.WinformsLaptimeLogger", "iRacingSimulator.Examples.WinformsLaptimeLogger\iRacingSimulator.Examples.WinformsLaptimeLogger.csproj", "{F036BCC7-4918-4058-A790-1EA00C1D97C1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{426199FD-4CB6-4AB8-8B42-053368F49416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{426199FD-4CB6-4AB8-8B42-053368F49416}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{426199FD-4CB6-4AB8-8B42-053368F49416}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F036BCC7-4918-4058-A790-1EA00C1D97C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F036BCC7-4918-4058-A790-1EA00C1D97C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F036BCC7-4918-4058-A790-1EA00C1D97C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F036BCC7-4918-4058-A790-1EA00C1D97C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
