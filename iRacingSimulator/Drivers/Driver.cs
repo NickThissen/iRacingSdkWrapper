@@ -106,10 +106,13 @@ namespace iRacingSimulator.Drivers
             this.Car.CarId = Parser.ParseInt(query["CarID"].GetValue());
             this.Car.CarNumber = query["CarNumber"].GetValue();
             this.Car.CarNumberRaw = Parser.ParseInt(query["CarNumberRaw"].GetValue());
-            this.Car.CarName = query["CarPath"].GetValue();
+            this.Car.CarName = query["CarScreenName"].GetValue();
             this.Car.CarClassId = Parser.ParseInt(query["CarClassID"].GetValue());
             this.Car.CarClassRelSpeed = Parser.ParseInt(query["CarClassRelSpeed"].GetValue());
             this.Car.CarClassColor = Parser.ParseColor(query["CarClassColor"].GetValue());
+            this.Car.CarClassShortName = query["CarClassShortName"].GetValue();
+            this.Car.CarShortName = query["CarScreenNameShort"].GetValue();
+            this.Car.CarPath = query["CarPath"].GetValue();
 
             this.IsPacecar = this.CustId == -1 || this.Car.CarName == PACECAR_NAME;
         }

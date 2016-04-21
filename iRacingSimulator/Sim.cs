@@ -60,6 +60,9 @@ namespace iRacingSimulator
         private Driver _leader;
         public Driver Leader{ get { return _leader; } }
 
+        private bool _isReplay;
+        public bool IsReplay { get { return _isReplay; } }
+
         #endregion
 
         #region Methods
@@ -451,7 +454,9 @@ namespace iRacingSimulator
         {
             // Cache info
             _telemetry = e.TelemetryInfo;
-            
+
+            _isReplay = e.TelemetryInfo.IsReplayPlaying.Value;
+
             // Check if session changed
             if (_currentSessionNumber == null || (_currentSessionNumber.Value != e.TelemetryInfo.SessionNum.Value))
             {

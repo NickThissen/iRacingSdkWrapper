@@ -80,10 +80,15 @@ namespace iRacingSdkWrapper
                         line = new string(chars);
                     }
                     builder.AppendLine(line);
-
                 }
                 _yaml = builder.ToString();
+            }
 
+            // Incorrect setup info dump fix: remove the setup info
+            var indexOfSetup = _yaml.IndexOf("CarSetup:");
+            if (indexOfSetup > 0)
+            {
+                _yaml = _yaml.Substring(0, indexOfSetup);
             }
         }
 

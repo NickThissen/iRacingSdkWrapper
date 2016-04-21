@@ -81,15 +81,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iRacingSdkWrapper\iRacingSdkWrapper.csproj">
+    <ProjectReference Include="..\..\iRacingSdkWrapper\iRacingSdkWrapper.csproj">
       <Project>{d6db568b-35b3-49eb-8cb3-e4e5f1424247}</Project>
       <Name>iRacingSdkWrapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\iRacingSimulator\iRacingSimulator.csproj">
+    <ProjectReference Include="..\..\iRacingSimulator\iRacingSimulator.csproj">
       <Project>{1765e7db-bee4-4324-a396-923d80b61ea0}</Project>
       <Name>iRacingSimulator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\irsdkSharp\iRSDKSharp.csproj">
+    <ProjectReference Include="..\..\irsdkSharp\iRSDKSharp.csproj">
       <Project>{72631b85-eb9a-473e-9b4c-65b355a9000d}</Project>
       <Name>iRSDKSharp</Name>
     </ProjectReference>
