@@ -287,10 +287,13 @@ namespace iRacingSimulator
 
         private void CalculateLivePositions()
         {
-            if (this.SessionData.EventType == "Race")
+            // In a race that is not yet in checkered flag mode,
+            // Live positions are determined from track position (total lap distance)
+            // Any other conditions (race finished, P, Q, etc), positions are ordered as result positions
+
+            if (this.SessionData.EventType == "Race" && !this.SessionData.IsCheckered)
             {
                 // Determine live position from lapdistance
-
                 int pos = 1;
                 foreach (var driver in _drivers.OrderByDescending(d => d.Live.TotalLapDistance))
                 {

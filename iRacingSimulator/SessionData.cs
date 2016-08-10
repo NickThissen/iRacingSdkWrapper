@@ -35,6 +35,15 @@ namespace iRacingSimulator
         
         public SessionFlag Flags { get; set; }
         public SessionStates State { get; set; }
+
+        /// <summary>
+        /// Is the checkered flag shown? (e.g. winner has passed the finish, but other drivers may still be racing)
+        /// </summary>
+        public bool IsCheckered { get; set; }
+
+        /// <summary>
+        /// Is the session finished? (e.g. all drivers have finished and session is in cool-down)
+        /// </summary>
         public bool IsFinished { get; set; }
 
         public void Update(SessionInfo info)
@@ -72,6 +81,7 @@ namespace iRacingSimulator
         {
             this.State = state;
             this.IsFinished = state == SessionStates.CoolDown;
+            this.IsCheckered = (state == SessionStates.CoolDown || state == SessionStates.Checkered);
         }
 
         public BestLap UpdateFastestLap(Laptime lap, Driver driver)
