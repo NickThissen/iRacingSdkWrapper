@@ -67,7 +67,7 @@ namespace iRacingSdkWrapper.Broadcast
         /// <summary>
         /// Clear all pit commands.
         /// </summary>
-        public void ClearTires()
+        public void Clear()
         {
             Broadcast(BroadcastMessageTypes.PitCommand, (int)PitCommandModeTypes.Clear, 0);
         }
@@ -75,7 +75,7 @@ namespace iRacingSdkWrapper.Broadcast
         /// <summary>
         /// Clear all tire changes.
         /// </summary>
-        public void Clear()
+        public void ClearTires()
         {
             Broadcast(BroadcastMessageTypes.PitCommand, (int)PitCommandModeTypes.ClearTires, 0);
         }
