@@ -146,6 +146,7 @@ namespace iRacingSimulator.Drivers
             get { return FakeSectorTimes == null || FakeSectorTimes.Length == 0 ? null : FakeSectorTimes[2]; }
         }
 
+        public int Incidents { get; set; }
         public string OutReason { get; set; }
         public int OutReasonId { get; set; }
         public bool IsOut { get { return this.OutReasonId != 0; } }
@@ -178,6 +179,7 @@ namespace iRacingSimulator.Drivers
                 this.AverageTime = this.Laps.Average();
             }
 
+            this.Incidents = Parser.ParseInt(query["Incidents"].GetValue());;
             this.OutReasonId = Parser.ParseInt(query["ReasonOutId"].GetValue());
             this.OutReason = query["ReasonOutStr"].GetValue();
         }
