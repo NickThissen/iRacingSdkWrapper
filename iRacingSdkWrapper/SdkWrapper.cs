@@ -253,8 +253,7 @@ namespace iRacingSdkWrapper
                     // Parse out your own driver Id
                     if (this.DriverId == -1)
                     {
-                        string sessionInfoDriver = sdk.GetSessionInfo();
-                        _DriverId = int.Parse(YamlParser.Parse(sessionInfoDriver, "DriverInfo:DriverCarIdx:"));
+                        _DriverId = (int)sdk.GetData("PlayerCarIdx");
                     }
 
                     // Get the session time (in seconds) of this update

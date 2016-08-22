@@ -12,16 +12,23 @@ namespace iRacingSdkWrapper
         protected TelemetryValue(iRSDKSharp.iRacingSDK sdk, string name)
         {
             if (sdk == null) throw new ArgumentNullException("sdk");
-            if (!sdk.VarHeaders.ContainsKey(name))
-                throw new ArgumentException("No telemetry value with the specified name exists.");
 
-
-            var header = sdk.VarHeaders[name];
-            _name = name;
-            _description = header.Desc;
-            _unit = header.Unit;
-            _type = header.Type;
+            _exists = sdk.VarHeaders.ContainsKey(name);
+            if (_exists)
+            {
+                var header = sdk.VarHeaders[name];
+                _name = name;
+                _description = header.Desc;
+                _unit = header.Unit;
+                _type = header.Type;
+            }
         }
+
+        private readonly bool _exists;
+        /// <summary>
+        /// Whether or not a telemetry value with this name exists on the current car.
+        /// </summary>
+        public bool Exists { get { return _exists; } }
 
         private readonly string _name;
         /// <summary>

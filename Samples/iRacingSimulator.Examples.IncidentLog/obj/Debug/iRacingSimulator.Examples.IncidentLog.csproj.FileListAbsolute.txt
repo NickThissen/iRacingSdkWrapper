@@ -21,3 +21,6 @@ C:\Users\nthissen\Documents\Programming\Projects\iRacingSdkWrapper\Samples\iRaci
 C:\Users\nthissen\Documents\Programming\Projects\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.IncidentLog\bin\Debug\YamlDotNet.pdb
 C:\Users\nthissen\Documents\Programming\Projects\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.IncidentLog\bin\Debug\YamlDotNet.xml
 C:\Users\nthissen\Documents\Programming\Projects\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.IncidentLog\bin\Debug\iRSDKSharp.pdb
+F:\Users\Nick\Documents\Programming\Projects\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.IncidentLog\bin\Debug\iRacingSimulator.Examples.IncidentLog.exe.config
+F:\Users\Nick\Documents\Programming\Projects\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.IncidentLog\obj\Debug\iRacingSimulator.Examples.IncidentLog.exe
+F:\Users\Nick\Documents\Programming\Projects\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.IncidentLog\obj\Debug\iRacingSimulator.Examples.IncidentLog.pdb

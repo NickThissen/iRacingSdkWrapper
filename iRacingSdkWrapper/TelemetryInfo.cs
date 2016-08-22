@@ -109,7 +109,12 @@ namespace iRacingSdkWrapper
                                     this.PowerMGUK,
                                     this.TorqueMGUK,
                                     this.DrsStatus,
-                                    this.LapCompleted
+                                    this.LapCompleted,
+                                    this.PlayerCarDriverIncidentCount,
+                                    this.PlayerCarTeamIncidentCount,
+                                    this.PlayerCarMyIncidentCount,
+                                    this.PlayerTrackSurface,
+                                    this.PlayerCarIdx
                                 });
             return values;
         }
@@ -541,5 +546,15 @@ namespace iRacingSdkWrapper
         public TelemetryValue<float> WindDir { get { return new TelemetryValue<float>(sdk, "WindDir"); } }
 
         public TelemetryValue<float> WindVel { get { return new TelemetryValue<float>(sdk, "WindVel"); } }
+
+        public TelemetryValue<int> PlayerCarTeamIncidentCount { get { return new TelemetryValue<int>(sdk, "PlayerCarTeamIncidentCount"); } }
+
+        public TelemetryValue<int> PlayerCarMyIncidentCount { get { return new TelemetryValue<int>(sdk, "PlayerCarMyIncidentCount"); } }
+
+        public TelemetryValue<int> PlayerCarDriverIncidentCount { get { return new TelemetryValue<int>(sdk, "PlayerCarDriverIncidentCount"); } }
+
+        public TelemetryValue<TrackSurfaces> PlayerTrackSurface { get { return new TelemetryValue<TrackSurfaces>(sdk, "PlayerTrackSurface"); } }
+
+        public TelemetryValue<int> PlayerCarIdx { get { return new TelemetryValue<int>(sdk, "PlayerCarIdx"); } }
     }
 }
