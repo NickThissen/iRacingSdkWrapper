@@ -1,0 +1,39 @@
+﻿<Window x:Class="iRacingSimulator.Examples.IncidentLog.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:iRacingSimulator.Examples.IncidentLog"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="625">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <DataGrid x:Name="driversGrid" 
+                  Grid.Column="0"
+                  AutoGenerateColumns="False" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding CarNumber}" Header="Car #" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding CurrentResults.Incidents}" Header="Incidents" />
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <DataGrid x:Name="incsGrid" 
+                  Grid.Column="2"
+                  AutoGenerateColumns="False" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding SessionType}" Header="Session" />
+                <DataGridTextColumn Binding="{Binding TimeDisplay}" Header="Time" />
+                <DataGridTextColumn Binding="{Binding DriverDisplay}" Header="Driver" />
+                <DataGridTextColumn Binding="{Binding IncDelta}" Header="Incident change" />
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" ResizeDirection="Columns"></GridSplitter>
+    </Grid>
+</Window>
