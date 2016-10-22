@@ -19,7 +19,8 @@ namespace iRacingSdkWrapper
         {
             _updateTime = updateTime;
 
-            //_yaml = yaml;
+            _rawYaml = yaml;
+
             this.FixYaml(yaml);
             this.ParseYaml();
         }
@@ -34,9 +35,15 @@ namespace iRacingSdkWrapper
 
         private string _yaml;
         /// <summary>
-        /// The raw YAML string representing the session info.
+        /// The YAML string representing the session info, modified to ensure correct parsing.
         /// </summary>
         public string Yaml { get { return _yaml; } }
+
+        private string _rawYaml;
+        /// <summary>
+        /// The raw YAML string as originally returned from the sim.
+        /// </summary>
+        public string RawYaml { get { return _rawYaml;} }
 
         private bool _isValidYaml;
         public bool IsValidYaml { get { return _isValidYaml; } }
