@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using iRacingSimulator.Examples.WPF_MVVM_DriverGrid.Annotations;
+
 
 namespace iRacingSimulator.Examples.WPF_MVVM_DriverGrid.ViewModels
 {
@@ -16,7 +16,7 @@ namespace iRacingSimulator.Examples.WPF_MVVM_DriverGrid.ViewModels
         public abstract void OnTelemetryUpdated(TelemetryInfo info, double updateTime);
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
+        
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             var handler = PropertyChanged;

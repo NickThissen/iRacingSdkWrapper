@@ -1,0 +1,5 @@
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.WinformsDriverGrid\obj\Debug\netcoreapp3.1\iRacingSimulator.Examples.WinformsDriverGrid.csprojAssemblyReference.cache
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.WinformsDriverGrid\obj\Debug\netcoreapp3.1\iRacingSimulator.Examples.WinformsDriverGrid.Form1.resources
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.WinformsDriverGrid\obj\Debug\netcoreapp3.1\iRacingSimulator.Examples.WinformsDriverGrid.Properties.Resources.resources
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.WinformsDriverGrid\obj\Debug\netcoreapp3.1\iRacingSimulator.Examples.WinformsDriverGrid.csproj.GenerateResource.cache
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSimulator.Examples.WinformsDriverGrid\obj\Debug\netcoreapp3.1\iRacingSimulator.Examples.WinformsDriverGrid.csproj.CoreCompileInputs.cache

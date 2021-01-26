@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "IxXbPM1pnhFRX0Anl0/Cu7WuJDITLMDogC8uXuETnbTPaxOL/XQakyIHTq6yD7K6Ff3vcNvf9bfdseYnYr7o6A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\david\\Source\\Repos\\iRacingSdkWrapper\\Samples\\iRacingSimulator.Examples.WinformsDriverGrid\\iRacingSimulator.Examples.WinformsDriverGrid.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\david\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\david\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512",
+    "C:\\Users\\david\\.nuget\\packages\\yamldotnet\\3.7.0\\yamldotnet.3.7.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'YamlDotNet 3.7.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "YamlDotNet",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
+}
