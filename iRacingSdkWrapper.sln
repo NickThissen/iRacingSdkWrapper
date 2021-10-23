@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSdkWrapper", "iRacingSdkWrapper\iRacingSdkWrapper.csproj", "{D6DB568B-35B3-49EB-8CB3-E4E5F1424247}"
 EndProject
@@ -9,13 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRSDKSharp", "irsdkSharp\iR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator", "iRacingSimulator\iRacingSimulator.csproj", "{1765E7DB-BEE4-4324-A396-923D80B61EA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.WinformsDriverGrid", "Samples\iRacingSimulator.Examples.WinformsDriverGrid\iRacingSimulator.Examples.WinformsDriverGrid.csproj", "{BBB48CBA-25AC-4D1A-A2E4-F9BA04EDF23E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.WPFDriverGrid", "Samples\iRacingSimulator.Examples.WPFDriverGrid\iRacingSimulator.Examples.WPFDriverGrid.csproj", "{B36991C5-2B13-4487-B42B-FA1EE0A7721F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.WPF-MVVM-DriverGrid", "Samples\iRacingSimulator.Examples.WPF-MVVM-DriverGrid\iRacingSimulator.Examples.WPF-MVVM-DriverGrid.csproj", "{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSdkWrapper.Examples.BroadcastMessages", "Samples\iRacingSdkWrapper.Examples.BroadcastMessages\iRacingSdkWrapper.Examples.BroadcastMessages.csproj", "{426199FD-4CB6-4AB8-8B42-053368F49416}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iRacingSimulator.Examples.IncidentLog", "Samples\iRacingSimulator.Examples.IncidentLog\iRacingSimulator.Examples.IncidentLog.csproj", "{991ED105-83E9-47C4-BF23-C4C99EACACEA}"
 EndProject
@@ -37,22 +31,10 @@ Global
 		{1765E7DB-BEE4-4324-A396-923D80B61EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1765E7DB-BEE4-4324-A396-923D80B61EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1765E7DB-BEE4-4324-A396-923D80B61EA0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BBB48CBA-25AC-4D1A-A2E4-F9BA04EDF23E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBB48CBA-25AC-4D1A-A2E4-F9BA04EDF23E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BBB48CBA-25AC-4D1A-A2E4-F9BA04EDF23E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BBB48CBA-25AC-4D1A-A2E4-F9BA04EDF23E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B36991C5-2B13-4487-B42B-FA1EE0A7721F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B36991C5-2B13-4487-B42B-FA1EE0A7721F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B36991C5-2B13-4487-B42B-FA1EE0A7721F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B36991C5-2B13-4487-B42B-FA1EE0A7721F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34F020F4-F320-4C65-9EC0-F2939AD9D7CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{426199FD-4CB6-4AB8-8B42-053368F49416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{426199FD-4CB6-4AB8-8B42-053368F49416}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{426199FD-4CB6-4AB8-8B42-053368F49416}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{426199FD-4CB6-4AB8-8B42-053368F49416}.Release|Any CPU.Build.0 = Release|Any CPU
 		{991ED105-83E9-47C4-BF23-C4C99EACACEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{991ED105-83E9-47C4-BF23-C4C99EACACEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{991ED105-83E9-47C4-BF23-C4C99EACACEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {221386BA-84CB-4BED-AB89-328F7FEE380E}
 	EndGlobalSection
 EndGlobal

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
-using System.Windows.Threading;
 using iRSDKSharp;
 using iRacingSdkWrapper.Broadcast;
 

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1765E7DB-BEE4-4324-A396-923D80B61EA0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iRacingSimulator</RootNamespace>
+    <AssemblyName>iRacingSimulator</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Drivers\Driver.cs" />
+    <Compile Include="Drivers\DriverCarInfo.cs" />
+    <Compile Include="Drivers\DriverChampInfo.cs" />
+    <Compile Include="Drivers\DriverLiveInfo.cs" />
+    <Compile Include="Drivers\DriverPitInfo.cs" />
+    <Compile Include="Drivers\DriverPrivateInfo.cs" />
+    <Compile Include="Drivers\DriverQualyResults.cs" />
+    <Compile Include="Drivers\DriverResults.cs" />
+    <Compile Include="Drivers\License.cs" />
+    <Compile Include="Events\RaceEvent.cs" />
+    <Compile Include="Laptime.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Sector.cs" />
+    <Compile Include="SessionData.cs" />
+    <Compile Include="Sim.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeDelta.cs" />
+    <Compile Include="Track.cs" />
+    <Compile Include="TrackConditions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iRacingSdkWrapper\iRacingSdkWrapper.csproj">
+      <Project>{d6db568b-35b3-49eb-8cb3-e4e5f1424247}</Project>
+      <Name>iRacingSdkWrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

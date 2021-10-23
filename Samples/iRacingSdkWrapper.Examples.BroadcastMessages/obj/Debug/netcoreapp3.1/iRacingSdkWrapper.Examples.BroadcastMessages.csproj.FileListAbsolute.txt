@@ -1,0 +1,4 @@
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSdkWrapper.Examples.BroadcastMessages\obj\Debug\netcoreapp3.1\iRacingSdkWrapper.Examples.BroadcastMessages.Form1.resources
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSdkWrapper.Examples.BroadcastMessages\obj\Debug\netcoreapp3.1\iRacingSdkWrapper.Examples.BroadcastMessages.Properties.Resources.resources
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSdkWrapper.Examples.BroadcastMessages\obj\Debug\netcoreapp3.1\iRacingSdkWrapper.Examples.BroadcastMessages.csproj.GenerateResource.cache
+C:\Users\david\Source\Repos\iRacingSdkWrapper\Samples\iRacingSdkWrapper.Examples.BroadcastMessages\obj\Debug\netcoreapp3.1\iRacingSdkWrapper.Examples.BroadcastMessages.csproj.CoreCompileInputs.cache
